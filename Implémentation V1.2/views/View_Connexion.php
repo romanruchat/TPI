@@ -39,7 +39,7 @@
                         <label for="inputPassword">Mot de Passe</label>
                     </div>
                 </div>
-                <a class="btn btn-primary btn-block"">Connexion</a>
+                <div><input class="btn btn-primary btn-block" type="submit" value="Se connecter">  </div>
             </form>
         </div>
     </div>

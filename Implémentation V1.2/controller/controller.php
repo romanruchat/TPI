@@ -40,7 +40,7 @@ function connexion(){
     require('views/View_Connexion.php');
 }
 
-function AddUser(){
+function adduser(){
 
     if($_POST['inputPassword'] != $_POST['confirmPassword']){
         ?>
@@ -54,13 +54,12 @@ function AddUser(){
     <?php
 }
 
-function LogUser(){
+function login(){
 
-    $user = get_user();
-
+    $user = get_user($_POST['inputEmail']);
     if(!empty($_POST['inputPassword']) && !empty($_POST['inputEmail']) &&
-        $user['Password'] == md5($_POST['Email'].$_POST['Password'])){
-        $_SESSION['loggedUser'] = $user['idPlayer'];
+        $user['Password'] == md5($_POST['inputEmail'].$_POST['inputPassword'])){
+        $_SESSION['loggedUser'] = $user['idUsers'];
         ?><script>document.location.href="index.php?action=Accueil";</script>
         <?php
         exit();

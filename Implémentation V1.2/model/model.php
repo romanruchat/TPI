@@ -22,7 +22,7 @@ function get_bd()
     return $connexion;
 }
 
-function get_user()
+function get_user($email)
 {
     // Connexion à la BD
     $connexion = get_bd();
@@ -30,11 +30,9 @@ function get_user()
     // Définition de la requête pour sélectionner la personne loguée
     $request = $connexion->prepare('SELECT * FROM user  WHERE Email = ? ');
     $request->execute(array($email));
-
-
-    $user=$request->fetchAll();
-    if(isset($donnees[0])){
-        return $donnees[0];
+    $data=$request->fetchAll();
+    if(isset($data[0])){
+        return $data[0];
     }else{
         return false;
     }
@@ -46,7 +44,7 @@ function add_user($lastName, $firstName, $password, $email, $streetName, $postCo
     $hash_password = md5($email.$password);
     // Connexion à la BD
     $connexion = get_bd();
-    $request = $connexion->prepare('INSERT INTO user (`Name`, First_Name, Password, Email, Street, Postcode, City, Floor_Number, Street_Number) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
-    $request->execute(array($lastName, $firstName, $hash_password, $email, $streetName, $postCode, $city, $floorNumber, $streetNumber));
+    $request = $connexion->prepare('INSERT INTO user (`Name`, First_Name, Password, Email, Street, Postcode, City, Floor_Number, Street_Number, User_Type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+    $request->execute(array($lastName, $firstName, $hash_password, $email, $streetName, $postCode, $city, $floorNumber, $streetNumber, "0"));
 }
 

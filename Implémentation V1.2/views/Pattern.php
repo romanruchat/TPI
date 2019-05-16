@@ -57,6 +57,12 @@
             <li class="nav-item">
                 <a class="nav-link" href="?action=Connexion">Se connecter</a>
             </li>
+            <?php
+            if(!empty($_SESSION['loggedUser'])){
+                echo '<li class="nav-item">
+                <a class="nav-link" href="?action=Connexion">TEST</a>';
+            } ?>
+            </li>
         </ul>
       </div>
     </div>

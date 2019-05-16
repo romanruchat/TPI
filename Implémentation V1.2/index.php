@@ -36,6 +36,9 @@ switch($action){
     case 'AddUser':
         adduser();
         break;
+    case 'Login':
+        login();
+    break;
     default : accueil();
 
 
