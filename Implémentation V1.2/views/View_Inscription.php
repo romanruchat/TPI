@@ -83,18 +83,19 @@
             </div>
             <div class="form-group">
                 <div class="form-row">
-                    <div class="col-md-3">
-                        <div class="form-label-group">
-                            <input type="number" id="streetNumber" name="streetNumber" class="form-control" placeholder="Numéro de rue" value="0" required="required">
-                            <label for="streetNumber">Numéro de rue</label>
-                        </div>
-                    </div>
                     <div class="col-md-6">
                         <div class="form-label-group">
                             <input type="text" id="streetName" name="streetName" class="form-control" placeholder="Rue" required="required">
                             <label for="streetName">Nom de la rue</label>
                         </div>
                     </div>
+                    <div class="col-md-3">
+                        <div class="form-label-group">
+                            <input type="number" id="streetNumber" name="streetNumber" class="form-control" placeholder="Numéro de rue" value="0" required="required">
+                            <label for="streetNumber">Numéro de rue</label>
+                        </div>
+                    </div>
+
                     <div class="col-md-3">
                         <div class="form-label-group">
                             <input type="number" id="floorNumber" name="floorNumber" class="form-control" placeholder="Numéro d'étage" value="0" required="required">

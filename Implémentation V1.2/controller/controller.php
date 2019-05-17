@@ -48,7 +48,7 @@ function adduser(){
         <?php
         exit();
     }
-    add_user($_POST['lastName'], $_POST['firstName'], $_POST['inputPassword'],  $_POST['inputEmail'], $_POST['streetName'], $_POST['postCode'], $_POST['inputCity'], $_POST['floorNumber'], $_POST['streetNumber'],  );
+    add_user($_POST['lastName'], $_POST['firstName'], $_POST['inputPassword'],  $_POST['inputEmail'], $_POST['streetName'], $_POST['postCode'], $_POST['inputCity'], $_POST['floorNumber'], $_POST['streetNumber']);
     ?>
     <script>document.location.href="index.php?action=Accueil";</script>
     <?php
@@ -65,8 +65,17 @@ function login(){
         exit();
     }else{
         ?>
-        <script>document.location.href="index.php?action=LogIn&errorMessage=Informations erronées";</script>
+        <script>document.location.href="index.php?action=Connexion&errorMessage=Informations erronées";</script>
         <?php
         exit();
     }
 }
+
+function getdishes(){
+
+    $dishes = get_dishes();
+
+    require('views/View_Plats.php');
+}
+
+?>

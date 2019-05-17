@@ -38,10 +38,11 @@ switch($action){
         break;
     case 'Login':
         login();
-    break;
+        break;
+    case 'GetDishes':
+        getdishes();
+        break;
     default : accueil();
-
-
     break;
 }
     

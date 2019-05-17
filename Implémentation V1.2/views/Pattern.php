@@ -46,23 +46,34 @@
               <a class="nav-link" href="?action=Reveries">Rêveries</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="?action=Plats">Plats</a>
+            <a class="nav-link" href="?action=GetDishes">Plats</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="?action=Contacts">Contacts</a>
           </li>
-            <li class="nav-item">
-                <a class="nav-link" href="?action=Inscription">S'inscrire</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="?action=Connexion">Se connecter</a>
-            </li>
+            <?php
+            if(empty($_SESSION['loggedUser'])){
+                echo '
+                    <li class="nav-item">
+                        <a class="nav-link" href="?action=Inscription">S\'inscrire</a>
+                    </li>';
+            }?>
+            <?php
+            if(empty($_SESSION['loggedUser'])){
+                echo '
+                    <li class="nav-item">
+                        <a class="nav-link" href="?action=Connexion">Se connecter</a>
+                    </li>';
+            }?>
             <?php
             if(!empty($_SESSION['loggedUser'])){
-                echo '<li class="nav-item">
-                <a class="nav-link" href="?action=Connexion">TEST</a>';
-            } ?>
-            </li>
+                echo '
+                    <li class="nav-item">
+                        <a class="nav-link" href="?action=GetDishes">TEST</a>
+                    </li>';
+            }?>
+
+
         </ul>
       </div>
     </div>

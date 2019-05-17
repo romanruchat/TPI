@@ -28,7 +28,7 @@ function get_user($email)
     $connexion = get_bd();
 
     // Définition de la requête pour sélectionner la personne loguée
-    $request = $connexion->prepare('SELECT * FROM user  WHERE Email = ? ');
+    $request = $connexion->prepare('SELECT * FROM User  WHERE Email = ? ');
     $request->execute(array($email));
     $data=$request->fetchAll();
     if(isset($data[0])){
@@ -44,7 +44,18 @@ function add_user($lastName, $firstName, $password, $email, $streetName, $postCo
     $hash_password = md5($email.$password);
     // Connexion à la BD
     $connexion = get_bd();
-    $request = $connexion->prepare('INSERT INTO user (`Name`, First_Name, Password, Email, Street, Postcode, City, Floor_Number, Street_Number, User_Type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
+    $request = $connexion->prepare('INSERT INTO User (`Name`, First_Name, Password, Email, Street, Postcode, City, Floor_Number, Street_Number, User_Type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
     $request->execute(array($lastName, $firstName, $hash_password, $email, $streetName, $postCode, $city, $floorNumber, $streetNumber, "0"));
 }
+
+function get_dishes(){
+
+    // Connexion à la BD
+    $connexion = get_bd();
+
+    $request = $connexion->prepare('SELECT Name, Prize, Description FROM Dishes');
+    $request->execute();
+    $data=$request->fetchAll();
+    return $data;
+    }
 
