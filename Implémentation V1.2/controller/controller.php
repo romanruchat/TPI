@@ -74,7 +74,14 @@ function login(){
 function getdishes(){
 
     $dishes = get_dishes();
+    require('views/View_Plats.php');
+}
 
+
+function search(){
+
+
+    $dishes = research($_POST['term']);
     require('views/View_Plats.php');
 }
 

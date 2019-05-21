@@ -57,5 +57,18 @@ function get_dishes(){
     $request->execute();
     $data=$request->fetchAll();
     return $data;
-    }
+}
+
+function research($term){
+
+    $term = htmlspecialchars($term); //pour sécuriser le formulaire contre les failles html
+    $connexion = get_bd();
+    $request = $connexion->prepare('SELECT Name, Prize, Description FROM dishes WHERE Name LIKE ? OR Description LIKE ?');
+    $request->execute(array("%".$term."%", "%".$term."%"));
+    $data=$request->fetchAll();
+    return $data;
+}
+
+
+
 

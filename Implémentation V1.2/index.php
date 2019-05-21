@@ -42,6 +42,9 @@ switch($action){
     case 'GetDishes':
         getdishes();
         break;
+    case 'Search':
+        search();
+        break;
     default : accueil();
     break;
 }
