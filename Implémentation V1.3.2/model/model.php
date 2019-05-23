@@ -68,7 +68,7 @@ function research($term){
 
     $term = htmlspecialchars($term); //pour sécuriser le formulaire contre les failles html
     $connexion = get_bd();
-    $request = $connexion->prepare('SELECT Name, Prize, Description FROM dishes WHERE Name LIKE  OR Description LIKE ?');
+    $request = $connexion->prepare('SELECT Name, Prize, Description FROM dishes WHERE Name LIKE ? OR Description LIKE ?');
     $request->execute(array("%".$term."%", "%".$term."%"));
     $data=$request->fetchAll();
     return $data;
@@ -82,5 +82,75 @@ function account_removal($id){
     $request->execute(array($id));
 }
 
+function get_particularities_into(){
 
+    // Connexion à la BD
+    $connexion = get_bd();
+    $request = $connexion->prepare('SELECT idParticularities, Type, Name FROM particularities WHERE Type = ? ');
+    $request->execute(array('intolerance'));
+    $data=$request->fetchAll();
+    return $data;
+    
+}
+function get_particularities_allergy(){
+
+    // Connexion à la BD
+    $connexion = get_bd();
+    $request = $connexion->prepare('SELECT idParticularities, Type, Name FROM particularities WHERE Type = ? ');
+    $request->execute(array('allergy'));
+    $data=$request->fetchAll();
+    return $data;
+
+}
+
+function get_particularities_diet(){
+
+    // Connexion à la BD
+    $connexion = get_bd();
+    $request = $connexion->prepare('SELECT idParticularities, Type, Name FROM particularities WHERE Type = ? ');
+    $request->execute(array('diet'));
+    $data=$request->fetchAll();
+    return $data;
+
+}
+
+function get_particularities_all(){
+
+    // Connexion à la BD
+    $connexion = get_bd();
+    $request = $connexion->prepare('SELECT idParticularities, Type, Name FROM particularities  ');
+    $request->execute();
+    $data=$request->fetchAll();
+    return $data;
+
+}
+
+function add_particularities($idUser, $idParticularities){
+
+    // Connexion à la BD
+    $connexion = get_bd();
+    $request = $connexion->prepare('INSERT INTO user_has_particularities (User_idUsers, Particularities_idParticularities) VALUES (?, ?)');
+    $request->execute(array($idUser, $idParticularities));
+}
+
+
+function delete_user_particularities($idUser){
+
+    // Connexion à la BD
+    $connexion = get_bd();
+    $request = $connexion->prepare('DELETE FROM user_has_particularities WHERE User_idUsers = ?');
+    $request->execute(array($idUser));
+
+}
+
+function get_user_particularities($idUser){
+
+    // Connexion à la BD
+    $connexion = get_bd();
+    $request = $connexion->prepare('SELECT Particularities_idParticularities AS idParticularities FROM user_has_particularities WHERE User_idUsers = ?');
+    $request->execute(array($idUser));
+    $data=$request->fetchAll();
+    return $data;
+
+}
 

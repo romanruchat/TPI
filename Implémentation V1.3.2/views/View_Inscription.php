@@ -1,28 +1,5 @@
 <?php Ob_start(); ?>
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="">
-  <meta name="author" content="">
-
-  <title>SB Admin - Register</title>
-
-  <!-- Custom fonts for this template-->
-  <link href="css/all.min.css" rel="stylesheet" type="text/css">
-
-  <!-- Custom styles for this template-->
-  <link href="css/sb-admin.css" rel="stylesheet">
-
-</head>
-
-<body>
-
-  <div class="container">
+<div class="container">
     <div class="card card-register mx-auto mt-5">
       <div class="card-header">Formulaire d'inscription</div>
       <div class="card-body">
@@ -109,10 +86,7 @@
             <div class="ErrorMsg"><?=@$_GET["errorMessage"]?></div>
         </form>
     </div>
-  </div>
-</body>
-
-</html>
-
+</div>
+</div>
 <?php $contenu = ob_get_clean();?>
 <?php require ("Pattern.php");?>

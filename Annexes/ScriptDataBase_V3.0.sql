@@ -65,7 +65,6 @@ CREATE TABLE IF NOT EXISTS `reveries_db`.`Order` (
   `Date` DATETIME NULL,
   `User_idUsers` INT NOT NULL,
   PRIMARY KEY (`idOrder`),
-  INDEX `fk_Order_User1_idx` (`User_idUsers` ASC) VISIBLE,
   CONSTRAINT `fk_Order_User1`
     FOREIGN KEY (`User_idUsers`)
     REFERENCES `reveries_db`.`User` (`idUser`)
@@ -82,7 +81,6 @@ CREATE TABLE IF NOT EXISTS `reveries_db`.`Images` (
   `Name` VARCHAR(255) NULL,
   `Dishes_idDishes` INT NOT NULL,
   PRIMARY KEY (`idImages`),
-  INDEX `fk_Images_Dishes1_idx` (`Dishes_idDishes` ASC) VISIBLE,
   CONSTRAINT `fk_Images_Dishes1`
     FOREIGN KEY (`Dishes_idDishes`)
     REFERENCES `reveries_db`.`Dishes` (`idDishes`)
@@ -99,8 +97,6 @@ CREATE TABLE IF NOT EXISTS `reveries_db`.`Order_has_Dishes` (
   `Dishes_idDishes` INT NOT NULL,
   `Dish_Number` INT NULL,
   PRIMARY KEY (`Order_idOrder`, `Dishes_idDishes`),
-  INDEX `fk_Order_has_Dishes_Dishes1_idx` (`Dishes_idDishes` ASC) VISIBLE,
-  INDEX `fk_Order_has_Dishes_Order1_idx` (`Order_idOrder` ASC) VISIBLE,
   CONSTRAINT `fk_Order_has_Dishes_Order1`
     FOREIGN KEY (`Order_idOrder`)
     REFERENCES `reveries_db`.`Order` (`idOrder`)
@@ -121,8 +117,6 @@ CREATE TABLE IF NOT EXISTS `reveries_db`.`User_has_Particularities` (
   `User_idUsers` INT NOT NULL,
   `Particularities_idParticularities` INT NOT NULL,
   PRIMARY KEY (`User_idUsers`, `Particularities_idParticularities`),
-  INDEX `fk_User_has_Particularities_Particularities1_idx` (`Particularities_idParticularities` ASC) VISIBLE,
-  INDEX `fk_User_has_Particularities_User1_idx` (`User_idUsers` ASC) VISIBLE,
   CONSTRAINT `fk_User_has_Particularities_User1`
     FOREIGN KEY (`User_idUsers`)
     REFERENCES `reveries_db`.`User` (`idUser`)
@@ -143,8 +137,6 @@ CREATE TABLE IF NOT EXISTS `reveries_db`.`Particularities_has_Dishes` (
   `Particularities_idParticularities` INT NOT NULL,
   `Dishes_idDishes` INT NOT NULL,
   PRIMARY KEY (`Particularities_idParticularities`, `Dishes_idDishes`),
-  INDEX `fk_Particularities_has_Dishes_Dishes1_idx` (`Dishes_idDishes` ASC) VISIBLE,
-  INDEX `fk_Particularities_has_Dishes_Particularities1_idx` (`Particularities_idParticularities` ASC) VISIBLE,
   CONSTRAINT `fk_Particularities_has_Dishes_Particularities1`
     FOREIGN KEY (`Particularities_idParticularities`)
     REFERENCES `reveries_db`.`Particularities` (`idParticularities`)

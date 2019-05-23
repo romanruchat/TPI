@@ -15,37 +15,51 @@ require("controller/controller.php");
 
 //Création d'une variable action qui récupérera via l'url les actions renvoyées par les différentes pages
 $action = @$_GET['action'];
+$menuPage = "";
 
 //Switch appelant les différentes fonctions du contrôleur en fonction de l'action reçue
 switch($action){
     case 'Accueil':
+        $menuPage = "accueil";
         accueil();
     break;
     case 'Reveries':
+        $menuPage = "reveries";
         reveries();
         break;
     case 'Plats':
+        $menuPage = "plats";
         plats();
         break;
+    case 'Contacts':
+        $menuPage = "contacts";
+        contacts();
+    break;
     case 'Inscription':
+        $menuPage = "inscription";
         inscription();
         break;
     case 'Connexion':
+        $menuPage = "connexion";
         connexion();
         break;
+
     case 'AddUser':
         adduser();
         break;
     case 'Login':
+        $menuPage = "connexion";
         login();
         break;
     case 'GetDishes':
+        $menuPage = "plats";
         getdishes();
         break;
     case 'Search':
         search();
         break;
     case 'Disconnection':
+        $menuPage = "deconnexion";
         disconnection();
         break;
     case 'Profile':
@@ -53,6 +67,12 @@ switch($action){
         break;
     case 'Removal':
         removal();
+        break;
+    case 'AddParticularities':
+        addparticularities();
+        break;
+    case 'AddDishesBasket':
+        adddishesbasket();
         break;
     default : accueil();
     break;

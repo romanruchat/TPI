@@ -1,0 +1,49 @@
+#divMain {
+    min-height: calc(100vh - 56px - 120px);
+    overflow: hidden;
+}
+.dishesParametersImage, .basketImage, .profileImage {
+    height: 30px;
+    width: 30px;
+    background-color: white;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 10px;
+    display: inline-block;
+}
+.dishesParametersImage{
+    background-image: url(/assets/img/parameters.png);
+}
+.profileImage {
+    background-image: url(/assets/img/user.png);
+}
+.basketImage {
+    background-image: url(/assets/img/basket.png);
+}
+
+
+
+.checkboxLabel {
+    min-width: 100px;
+}
+.dishesHeader {
+    text-align: left;
+}
+.dishesHeader > * {
+    vertical-align: middle;
+}
+.searchForm {
+    display: inline-block;
+    width: 200px;
+}
+.searchForm > input {
+    width: 200px;
+}
+.dishTitle {
+
+    width: calc(100% - 400px);
+    display: inline-block;
+    text-align: center;
+
+}

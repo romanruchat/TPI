@@ -40,6 +40,10 @@ function connexion(){
     require('views/View_Connexion.php');
 }
 
+function contacts(){
+    require('views/View_Contacts.php');
+}
+
 function adduser(){
 
     if($_POST['inputPassword'] != $_POST['confirmPassword']){
@@ -61,7 +65,8 @@ function login(){
     if(!empty($_POST['inputPassword']) && !empty($_POST['inputEmail']) &&
         $user['Password'] == md5($_POST['inputEmail'].$_POST['inputPassword'])){
         $_SESSION['loggedUser'] = $user['idUser'];
-        ?><script>document.location.href="index.php?action=Accueil";</script>
+        $_SESSION['User_Type'] = $user['User_Type'];
+            ?><script>document.location.href="index.php?action=Accueil";</script>
         <?php
         exit();
     }else{
@@ -93,22 +98,68 @@ function disconnection(){
 
 function profile(){
 
-    $name = $_POST['intolerance'];
-
-
-    foreach ($name as $into){
-        echo $into."<br />";
-    } // end brace for if(isset
-
     $data = get_user(["id" => $_SESSION['loggedUser']]);
+    /*$intos = get_particularities_into();
+    $allergies = get_particularities_allergy();
+    $diets = get_particularities_diet();*/
+
+    $intos = array();
+    $allergies = array();
+    $diets = array();
+
+    $all = get_particularities_all();
+    $userParticularities = get_user_particularities($_SESSION['loggedUser']);
+
+    foreach($all as $particularity){
+        $particularity['checked'] = false;
+        foreach($userParticularities as $userParticularity){
+            if($userParticularity["idParticularities"] == $particularity["idParticularities"]){
+                $particularity['checked'] = true;
+            }
+        }
+        switch ($particularity["Type"]){
+            case 'intolerance':
+                array_push($intos, $particularity);
+                break;
+            case 'allergy':
+                array_push($allergies, $particularity);
+                break;
+            case 'diet':
+                array_push($diets, $particularity);
+                break;
+
+        }
+    }
+
     require('views/View_Profil.php');
-    var_dump($data);
 
 
 }
+
 
 function removal(){
     account_removal($_SESSION['loggedUser']);
     accueil();
 }
+
+function addparticularities(){
+
+    $all = get_particularities_all();
+    delete_user_particularities($_SESSION['loggedUser']);
+    foreach($all as $particularity){
+        if(!empty($_POST['particularity_'.$particularity['idParticularities']])){
+            add_particularities($_SESSION['loggedUser'], $particularity['idParticularities']);
+        }
+    }
+    profile();
+
+}
+
+function adddishesbasket(){
+
+    add_dishes_basket();
+}
 ?>
+
+
+
