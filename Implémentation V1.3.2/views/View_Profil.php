@@ -1,7 +1,7 @@
 <?php Ob_start(); ?>
 
 
-
+<!-- Affichage des informations de l'utilisateur -->
 <section class="py-5">
     <div class="container">
         <div class="card-header">Vos informations</div>
@@ -20,6 +20,7 @@
                             <p><strong>Etage: </strong><?= $data['Floor_Number']; ?></p>
                         </div>
                     </div>
+                    <!-- formulaire de modifications des spécificités du profil utilisateur -->
                         <form action="?action=AddParticularities" method="post">
                                 <div class="form-row">
                                     <div class="col-md-3">
@@ -69,6 +70,7 @@
 <?php $contenu = ob_get_clean();?>
 <?php require ("Pattern.php");?>
 
+<!-- Script javascript permettant d'ouvrir la boîte de confirmation de suppression de compte -->
 <SCRIPT LANGUAGE="JavaScript">
     function confirmation() {
         var msg = "Êtes-vous sur de vouloir supprimer votre compte ?";

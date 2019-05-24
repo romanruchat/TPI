@@ -15,9 +15,12 @@ require("controller/controller.php");
 
 //Création d'une variable action qui récupérera via l'url les actions renvoyées par les différentes pages
 $action = @$_GET['action'];
+
+//Déclaration de la variable permettant le changement de couleur des boutons du menu
 $menuPage = "";
 
 //Switch appelant les différentes fonctions du contrôleur en fonction de l'action reçue
+// $action est l'action reçu via l'url qui nous permet de
 switch($action){
     case 'Accueil':
         $menuPage = "accueil";
@@ -68,11 +71,20 @@ switch($action){
     case 'Removal':
         removal();
         break;
+    case 'AddDishPage':
+        adddishpage();
+        break;
+    case 'AddDish':
+        adddish();
+        break;
     case 'AddParticularities':
         addparticularities();
         break;
     case 'AddDishesBasket':
         adddishesbasket();
+        break;
+    case 'ParametersPage':
+        parameterspage();
         break;
     default : accueil();
     break;

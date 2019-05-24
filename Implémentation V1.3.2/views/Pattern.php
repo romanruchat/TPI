@@ -37,7 +37,7 @@
 
 <body>
 
-  <!-- Navigation -->
+  <!-- barre de menu -->
   <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
         <div class="container">
       <a class="navbar-brand" href="?action=Accueil">Rêveries</a>
@@ -58,7 +58,7 @@
               <li class="nav-item <?=($GLOBALS["menuPage"] == "contacts")?"active":""?>">
                   <a class="nav-link" href="?action=Contacts">Contacts</a>
               </li>
-
+            <!-- Affiche les boutons uniquement si l'utilisateur n'est pas connecté -->
               <?php
             if(empty($_SESSION['loggedUser'])) : ?>
                 <li class="nav-item <?=($GLOBALS["menuPage"] == "inscription")?"active":""?>">
@@ -67,11 +67,20 @@
                 <li class="nav-item <?=($GLOBALS["menuPage"] == "connexion")?"active":""?>">
                     <a class="nav-link" href="?action=Connexion">Se connecter</a>
                 </li>
+            <!-- Affiche les boutons uniquement si l'utilisateur est  connecté -->
               <?php endif;
-                if(!empty($_SESSION['loggedUser'])) : ?>
+              if(!empty($_SESSION['loggedUser'])) : ?>
                     <li class="nav-item <?=($GLOBALS["menuPage"] == "deconnexion")?"active":""?>">
                         <a class="nav-link" href="?action=Disconnection">Se déconnecter</a>
                     </li>
+                  <!-- Affiche les boutons uniquement si l'utilisateur est  administrateur -->
+              <?php if (isset($_SESSION['User_Type']) && $_SESSION['User_Type'] == "1") : ?>
+              <li class="nav-item">
+                  <a class="nav-link" href="?action=ParametersPage">
+                      <div class="parametersImage"></div>
+                  </a>
+              </li>
+                  <?php endif; ?>
                     <li class="nav-item">
                         <a class="nav-link" href="?action=Profile">
                             <div class="profileImage"></div>

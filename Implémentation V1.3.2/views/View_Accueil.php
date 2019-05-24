@@ -8,6 +8,7 @@
 
 <?php Ob_start(); ?>
   <!-- Content section -->
+<div class="ErrorMsg"><?=@$_GET["errorMessage"]?></div>
   <section class="py-5">
     <div class="container">
         <h3>Actualités</h3>

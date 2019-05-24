@@ -40,10 +40,12 @@ function connexion(){
     require('views/View_Connexion.php');
 }
 
+//Affiche la page de contacts
 function contacts(){
     require('views/View_Contacts.php');
 }
 
+//Ajoute l'utilisateur à la base de données
 function adduser(){
 
     if($_POST['inputPassword'] != $_POST['confirmPassword']){
@@ -54,10 +56,11 @@ function adduser(){
     }
     add_user($_POST['lastName'], $_POST['firstName'], $_POST['inputPassword'],  $_POST['inputEmail'], $_POST['streetName'], $_POST['postCode'], $_POST['inputCity'], $_POST['floorNumber'], $_POST['streetNumber']);
     ?>
-    <script>document.location.href="index.php?action=Accueil";</script>
+    <script>document.location.href="index.php?action=Accueil&errorMessage=Inscription réussie";</script>
     <?php
 }
 
+//Permet à l'utilisateur de se connecter
 function login(){
 
 
@@ -77,31 +80,31 @@ function login(){
     }
 }
 
+//Récupére les plats puis affiche la page des plats
 function getdishes(){
 
     $dishes = get_dishes();
     require('views/View_Plats.php');
 }
 
-
+//Affiche la page de plats avec les plats recherchés
 function search(){
 
     $dishes = research($_POST['term']);
     require('views/View_Plats.php');
 }
 
+//Permet à l'utilisateur de se déconnecter
 function disconnection(){
 
     unset($_SESSION['loggedUser']);
     accueil();
 }
 
+//Affiche le profil de l'utilisateur avec ses spécificités
 function profile(){
 
     $data = get_user(["id" => $_SESSION['loggedUser']]);
-    /*$intos = get_particularities_into();
-    $allergies = get_particularities_allergy();
-    $diets = get_particularities_diet();*/
 
     $intos = array();
     $allergies = array();
@@ -136,12 +139,13 @@ function profile(){
 
 }
 
-
+//Supprime le compte de l'utilisateur
 function removal(){
     account_removal($_SESSION['loggedUser']);
     accueil();
 }
 
+//Ajoute les spécificités de l'utilisateur à la base de données
 function addparticularities(){
 
     $all = get_particularities_all();
@@ -153,6 +157,24 @@ function addparticularities(){
     }
     profile();
 
+}
+
+function adddishpage(){
+
+    require('views/View_AddDish.php');
+}
+
+function adddish(){
+
+    add_dish($_POST['dishName'], $_POST['dishPrize'], $_POST['dishDescription']);
+    getdishes();
+}
+
+function parameterspage(){
+
+    $users = get_users();
+    $particularities = get_particularities_all();
+    require('views/View_ParametersPage.php');
 }
 
 function adddishesbasket(){

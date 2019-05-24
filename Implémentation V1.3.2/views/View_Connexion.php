@@ -3,10 +3,11 @@
     <div class="card card-register mx-auto mt-5">
         <div class="card-header">Formulaire de connexion</div>
         <div class="card-body">
+            <!-- Formulaire de connexion -->
             <form action="?action=Login" method="post">
                 <div class="form-group">
                     <div class="form-label-group">
-                        <input type="email" id="inputEmail" name="inputEmail" class="form-control" placeholder="Email address" required="required">
+                        <input type="email" id="inputEmail" name="inputEmail" class="form-control" placeholder="Email address" required="required" autofocus="autofocus">
                         <label for="inputEmail">Adresse Email</label>
                     </div>
                 </div>

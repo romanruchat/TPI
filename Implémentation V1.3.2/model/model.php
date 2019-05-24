@@ -8,9 +8,9 @@ Version : 1.0
 But du fichier : Ce fichier fait le lien avec la base de données, ils stockent toutes les fonctions nécessitant une liaison à la base de données.
 */
 
-/*Fonctions liées à la base de données, ajout d'utilisateurs, récupérations de stastiques..etc */
+/*Fonctions liées à la base de données, ajout d'utilisateurs, récupérations des données des plats...etc */
 
-// Connexion à la BD
+//fonction de connexion à la BD
 function get_bd()
 {
     // connexion à MySQL et BDD reveries
@@ -22,6 +22,8 @@ function get_bd()
     return $connexion;
 }
 
+//fonction de récupération des données de l'utilisateur
+// $param est une variable qui permet la récupération des données en fonctions de la données déjà en notre possession
 function get_user($param)
 {
     // Connexion à la BD
@@ -44,8 +46,10 @@ function get_user($param)
 }
 
 //Fonction d'ajout de l'utilisateur à la Base de données
+//Les variables sont les informations de l'utilisateur
 function add_user($lastName, $firstName, $password, $email, $streetName, $postCode, $city,  $floorNumber, $streetNumber){
 
+    //Hache le mot de passe avec l'email
     $hash_password = md5($email.$password);
     // Connexion à la BD
     $connexion = get_bd();
@@ -53,6 +57,7 @@ function add_user($lastName, $firstName, $password, $email, $streetName, $postCo
     $request->execute(array($lastName, $firstName, $hash_password, $email, $streetName, $postCode, $city, $floorNumber, $streetNumber, "0"));
 }
 
+//fonction de récupération des données des plats retournées dans un tableau par la suite
 function get_dishes(){
 
     // Connexion à la BD
@@ -64,6 +69,8 @@ function get_dishes(){
     return $data;
 }
 
+//Fonction permettant la recherche de plats
+// $term est le texte rentré par l'utilisateur
 function research($term){
 
     $term = htmlspecialchars($term); //pour sécuriser le formulaire contre les failles html
@@ -74,6 +81,8 @@ function research($term){
     return $data;
 }
 
+//Fonction de suppression de compte
+// $id est l'ID de l'utilisateur
 function account_removal($id){
 
     // Connexion à la BD
@@ -82,38 +91,7 @@ function account_removal($id){
     $request->execute(array($id));
 }
 
-function get_particularities_into(){
-
-    // Connexion à la BD
-    $connexion = get_bd();
-    $request = $connexion->prepare('SELECT idParticularities, Type, Name FROM particularities WHERE Type = ? ');
-    $request->execute(array('intolerance'));
-    $data=$request->fetchAll();
-    return $data;
-    
-}
-function get_particularities_allergy(){
-
-    // Connexion à la BD
-    $connexion = get_bd();
-    $request = $connexion->prepare('SELECT idParticularities, Type, Name FROM particularities WHERE Type = ? ');
-    $request->execute(array('allergy'));
-    $data=$request->fetchAll();
-    return $data;
-
-}
-
-function get_particularities_diet(){
-
-    // Connexion à la BD
-    $connexion = get_bd();
-    $request = $connexion->prepare('SELECT idParticularities, Type, Name FROM particularities WHERE Type = ? ');
-    $request->execute(array('diet'));
-    $data=$request->fetchAll();
-    return $data;
-
-}
-
+//Fonction récupérant l'ensemble des spécificités
 function get_particularities_all(){
 
     // Connexion à la BD
@@ -125,6 +103,8 @@ function get_particularities_all(){
 
 }
 
+//Fonction ajoutant une particularité à l'utilisateur
+// $idUser est l'ID de l'utilisateur, $idParticularities est l'ID de la spécificité
 function add_particularities($idUser, $idParticularities){
 
     // Connexion à la BD
@@ -133,7 +113,8 @@ function add_particularities($idUser, $idParticularities){
     $request->execute(array($idUser, $idParticularities));
 }
 
-
+//Fonction supprimant toutes les spécificités de l'utilisateur
+// $idUser est l'ID de l'utilisateur
 function delete_user_particularities($idUser){
 
     // Connexion à la BD
@@ -143,6 +124,8 @@ function delete_user_particularities($idUser){
 
 }
 
+//Fonction de récupération des spécificités de l'utilisateur
+// $idUser est l'ID de l'utilisateur
 function get_user_particularities($idUser){
 
     // Connexion à la BD
@@ -154,3 +137,23 @@ function get_user_particularities($idUser){
 
 }
 
+function add_dish($dishName, $dishPrize, $dishDescription){
+
+    // Connexion à la BD
+    $connexion = get_bd();
+    $request = $connexion->prepare('INSERT INTO Dishes (Name, Prize, Description) VALUES (?, ?, ?)');
+    $request->execute(array($dishName, $dishPrize, $dishDescription));
+}
+
+
+//fonction de récupération des données des utilisateurs retournées dans un tableau par la suite
+function get_users(){
+
+    // Connexion à la BD
+    $connexion = get_bd();
+
+    $request = $connexion->prepare('SELECT * FROM User');
+    $request->execute();
+    $data=$request->fetchAll();
+    return $data;
+}
