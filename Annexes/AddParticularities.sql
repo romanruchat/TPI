@@ -1,0 +1,9 @@
+INSERT INTO Particularities (Type, Name) VALUES ('intolerance', 'Gluten');
+INSERT INTO Particularities (Type, Name) VALUES ('intolerance', 'Fructose');
+INSERT INTO Particularities (Type, Name) VALUES ('intolerance', 'Lactose');
+INSERT INTO Particularities (Type, Name) VALUES ('intolerance', 'Histamine');
+INSERT INTO Particularities (Type, Name) VALUES ('diet', 'Végétarien');
+INSERT INTO Particularities (Type, Name) VALUES ('diet', 'Pollotarien');
+INSERT INTO Particularities (Type, Name) VALUES ('allergy', 'Crustacés');
+INSERT INTO Particularities (Type, Name) VALUES ('allergy', 'Oeufs');
+INSERT INTO Particularities (Type, Name) VALUES ('allergy', 'Soja');
