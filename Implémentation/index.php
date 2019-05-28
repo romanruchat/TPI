@@ -92,8 +92,11 @@ switch($action){
     case 'Basket':
         basket();
         break;
+    case 'ConfirmOrder':
+        confirmorder();
+        break;
 
-    // default : accueil();
+    default : accueil();
     break;
 }
     

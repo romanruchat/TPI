@@ -191,6 +191,7 @@ function dish_particularities($idParticularities, $idDish){
     $request->execute(array($idParticularities, $idDish));
 }
 
+
 /*function add_dish_basket(){
 
     // Connexion à la BD
