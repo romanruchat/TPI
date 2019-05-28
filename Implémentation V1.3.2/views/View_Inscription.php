@@ -73,7 +73,6 @@
                                 <label for="streetNumber">Numéro de rue</label>
                             </div>
                         </div>
-
                         <div class="col-md-3">
                             <div class="form-label-group">
                                 <input type="number" id="floorNumber" name="floorNumber" class="form-control" placeholder="Numéro d'étage" value="0" required="required"/>
@@ -82,6 +81,15 @@
                         </div>
                     </div>
                 </div>
+                <!-- Affiche les boutons uniquement si l'utilisateur est  administrateur -->
+                <?php if (isset($_SESSION['User_Type']) && $_SESSION['User_Type'] == "1") : ?>
+                <div class="form-group">
+                        <div class="form-label-group">
+                            <input type="text" id="userType" name="userType" class="form-control" placeholder="Type d'utilisateur" required="required"/>
+                            <label for="userType">Type d'utilisateur</label>
+                        </div>
+                </div>
+                <?php endif; ?>
                 <div><input class="btn btn-primary btn-block" type="submit"  value="S'inscrire"></div>
                 <div class="ErrorMsg"><?=@$_GET["errorMessage"]?></div>
             </form>

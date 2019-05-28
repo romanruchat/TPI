@@ -54,7 +54,7 @@ function adduser(){
         <?php
         exit();
     }
-    add_user($_POST['lastName'], $_POST['firstName'], $_POST['inputPassword'],  $_POST['inputEmail'], $_POST['streetName'], $_POST['postCode'], $_POST['inputCity'], $_POST['floorNumber'], $_POST['streetNumber']);
+    add_user($_POST['lastName'], $_POST['firstName'], $_POST['inputPassword'],  $_POST['inputEmail'], $_POST['streetName'], $_POST['postCode'], $_POST['inputCity'], $_POST['floorNumber'], $_POST['streetNumber'], $_POST['userType']);
     ?>
     <script>document.location.href="index.php?action=Accueil&errorMessage=Inscription réussie";</script>
     <?php
@@ -161,12 +161,42 @@ function addparticularities(){
 
 function adddishpage(){
 
+    $intos = array();
+    $allergies = array();
+    $diets = array();
+
+    $all = get_particularities_all();
+
+    foreach($all as $particularity){
+        switch ($particularity["Type"]){
+            case 'intolerance':
+                array_push($intos, $particularity);
+                break;
+            case 'allergy':
+                array_push($allergies, $particularity);
+                break;
+            case 'diet':
+                array_push($diets, $particularity);
+                break;
+
+        }
+    }
+
     require('views/View_AddDish.php');
 }
 
 function adddish(){
 
     add_dish($_POST['dishName'], $_POST['dishPrize'], $_POST['dishDescription']);
+    $dish = get_dish(["name" => $_POST['dishName']]);
+    var_dump($dish);
+    $all = get_particularities_all();
+    foreach($all as $particularity){
+        if(!empty($_POST['particularity_'.$particularity['idParticularities']])){
+            dish_particularities($particularity['idParticularities'], $dish['idDishes']);
+        }
+    }
+
     getdishes();
 }
 
@@ -177,9 +207,21 @@ function parameterspage(){
     require('views/View_ParametersPage.php');
 }
 
-function adddishesbasket(){
+$dishesSelected = array();
 
-    add_dishes_basket();
+function adddishbasket(){
+
+    global $dishesSelected;
+    $dish = get_dish(["id" => $_POST['idDish']]);
+
+    array_push($dishesSelected, $dish);
+    require('views/View_Panier.php');
+}
+
+function basket(){
+
+
+    require('views/View_Panier.php');
 }
 ?>
 

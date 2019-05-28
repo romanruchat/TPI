@@ -16,12 +16,15 @@
             <div class="col-md-4">
                 <div class="dishTitle">Plats</div>
             </div>
+            <!-- Affiche les boutons uniquement si l'utilisateur est  administrateur -->
+            <?php if (isset($_SESSION['User_Type']) && $_SESSION['User_Type'] == "1") : ?>
             <div class="col-md-4">
                 <a href="?action=AddDishPage">
-                <input class="btn btn-primary btn-block" type="submit" value="Ajouter un plat">
+                    <input class="btn btn-primary btn-block" type="submit" value="Ajouter un plat">
                 </a>
             </div>
-            </div>
+            <?php endif; ?>
+        </div>
         <div class="card-body">
             <div class="form-group">
                 <div class="form-row">
@@ -29,13 +32,14 @@
                     <?php if(isset($dishes))
                     foreach($dishes as $dish) : ?>
                             <div class="col-md-3">
-                                <form action="?action=AddDishes">
+                                <form action="?action=AddDishBasket" method="post">
                                     <div class="form-label-group">
+                                        <input hidden id="idDish" name="idDish" value="<?= $dish['idDishes']; ?>"/>
                                         <p><strong>Nom : </strong><?= $dish['Name']; ?></p>
                                         <p><strong>Prix : </strong><?= $dish['Prize']; ?></p>
                                         <p><strong>Description : </strong><?= $dish['Description']; ?></p>
                                     </div>
-
+                                    <?php ?>
                                     <div><input class="btn btn-primary btn-block" type="submit"  value="Ajouter au panier"></div>
                                 </form>
                             </div>

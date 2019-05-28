@@ -47,14 +47,20 @@ function get_user($param)
 
 //Fonction d'ajout de l'utilisateur à la Base de données
 //Les variables sont les informations de l'utilisateur
-function add_user($lastName, $firstName, $password, $email, $streetName, $postCode, $city,  $floorNumber, $streetNumber){
+function add_user($lastName, $firstName, $password, $email, $streetName, $postCode, $city,  $floorNumber, $streetNumber, $userType){
+
+    if(isset($userType) && $userType == "administrateur"){
+        $userType = '1';
+    }else{
+        $userType = '0';
+    }
 
     //Hache le mot de passe avec l'email
     $hash_password = md5($email.$password);
     // Connexion à la BD
     $connexion = get_bd();
     $request = $connexion->prepare('INSERT INTO User (`Name`, First_Name, Password, Email, Street, Postcode, City, Floor_Number, Street_Number, User_Type) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
-    $request->execute(array($lastName, $firstName, $hash_password, $email, $streetName, $postCode, $city, $floorNumber, $streetNumber, "0"));
+    $request->execute(array($lastName, $firstName, $hash_password, $email, $streetName, $postCode, $city, $floorNumber, $streetNumber, $userType));
 }
 
 //fonction de récupération des données des plats retournées dans un tableau par la suite
@@ -63,7 +69,7 @@ function get_dishes(){
     // Connexion à la BD
     $connexion = get_bd();
 
-    $request = $connexion->prepare('SELECT Name, Prize, Description FROM Dishes');
+    $request = $connexion->prepare('SELECT * FROM Dishes');
     $request->execute();
     $data=$request->fetchAll();
     return $data;
@@ -75,7 +81,7 @@ function research($term){
 
     $term = htmlspecialchars($term); //pour sécuriser le formulaire contre les failles html
     $connexion = get_bd();
-    $request = $connexion->prepare('SELECT Name, Prize, Description FROM dishes WHERE Name LIKE ? OR Description LIKE ?');
+    $request = $connexion->prepare('SELECT Name, Prize, Description FROM Dishes WHERE Name LIKE ? OR Description LIKE ?');
     $request->execute(array("%".$term."%", "%".$term."%"));
     $data=$request->fetchAll();
     return $data;
@@ -96,7 +102,7 @@ function get_particularities_all(){
 
     // Connexion à la BD
     $connexion = get_bd();
-    $request = $connexion->prepare('SELECT idParticularities, Type, Name FROM particularities  ');
+    $request = $connexion->prepare('SELECT idParticularities, Type, Name FROM Particularities  ');
     $request->execute();
     $data=$request->fetchAll();
     return $data;
@@ -109,7 +115,7 @@ function add_particularities($idUser, $idParticularities){
 
     // Connexion à la BD
     $connexion = get_bd();
-    $request = $connexion->prepare('INSERT INTO user_has_particularities (User_idUsers, Particularities_idParticularities) VALUES (?, ?)');
+    $request = $connexion->prepare('INSERT INTO User_has_Particularities (User_idUsers, Particularities_idParticularities) VALUES (?, ?)');
     $request->execute(array($idUser, $idParticularities));
 }
 
@@ -119,7 +125,7 @@ function delete_user_particularities($idUser){
 
     // Connexion à la BD
     $connexion = get_bd();
-    $request = $connexion->prepare('DELETE FROM user_has_particularities WHERE User_idUsers = ?');
+    $request = $connexion->prepare('DELETE FROM User_has_Particularities WHERE User_idUsers = ?');
     $request->execute(array($idUser));
 
 }
@@ -130,7 +136,7 @@ function get_user_particularities($idUser){
 
     // Connexion à la BD
     $connexion = get_bd();
-    $request = $connexion->prepare('SELECT Particularities_idParticularities AS idParticularities FROM user_has_particularities WHERE User_idUsers = ?');
+    $request = $connexion->prepare('SELECT Particularities_idParticularities AS idParticularities FROM User_has_Particularities WHERE User_idUsers = ?');
     $request->execute(array($idUser));
     $data=$request->fetchAll();
     return $data;
@@ -157,3 +163,37 @@ function get_users(){
     $data=$request->fetchAll();
     return $data;
 }
+
+function get_dish($param){
+
+    // Connexion à la BD
+    $connexion = get_bd();
+
+    if(isset($param["name"])) {
+        $request = $connexion->prepare('SELECT * FROM Dishes  WHERE Name = ? ');
+        $request->execute(array($param["name"]));
+    } else if (isset($param["id"])) {
+        $request = $connexion->prepare('SELECT * FROM Dishes  WHERE idDishes = ? ');
+        $request->execute(array($param['id']));
+    }
+
+    $data=$request->fetchAll();
+    return $data[0];
+
+}
+
+function dish_particularities($idParticularities, $idDish){
+
+    // Connexion à la BD
+    $connexion = get_bd();
+
+    $request = $connexion->prepare('INSERT INTO Particularities_has_Dishes (Particularities_idParticularities, Dishes_idDishes) VALUES (?, ?)');
+    $request->execute(array($idParticularities, $idDish));
+}
+
+/*function add_dish_basket(){
+
+    // Connexion à la BD
+    $connexion = get_bd();
+
+}*/

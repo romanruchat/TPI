@@ -2,6 +2,7 @@
 
 
 <div class="parametersMain">
+
     <div class="scrollArea">
     <?php if(isset($users))
     foreach($users as $user) : ?>
@@ -17,8 +18,6 @@
         </div>
     <?php endforeach; ?>
     </div>
-</div>
-<div class="parametersMain">
 <div class="scrollArea">
     <?php if(isset($particularities))
         foreach($particularities as $particularity) : ?>
@@ -26,7 +25,7 @@
                 <div><strong>Nom : </strong><?= $particularity['Name']; ?></div>
                 <div><strong>Type : </strong><?= $particularity['Type']; ?></div>
                 <div class="userDataParameters">
-                    <a class="nav-link" href="?action=UserUpdate">
+                    <a class="nav-link" href="?action=ParticularityUpdate">
                         <div class="parametersImage"></div>
                     </a>
                 </div>

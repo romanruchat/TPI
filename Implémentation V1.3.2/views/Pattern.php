@@ -104,6 +104,8 @@
         <footer class="py-5 bg-dark">
           <div class="container">
               <p class="m-0 text-center text-white">Roman Ruchat Rêveries TPI 2019</p>
+              <p class="m-0 text-center text-white">7 Rue de la Concorde 1345 L'Orient</p>
+              <p class="m-0 text-center text-white">0799007562</p>
           </div>
         </footer>
         <!-- Bootstrap core JavaScript -->

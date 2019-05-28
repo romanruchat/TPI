@@ -80,13 +80,20 @@ switch($action){
     case 'AddParticularities':
         addparticularities();
         break;
-    case 'AddDishesBasket':
-        adddishesbasket();
+    case 'AddDishBasket':
+        adddishbasket();
         break;
     case 'ParametersPage':
         parameterspage();
         break;
-    default : accueil();
+    case 'UserUpdate':
+        inscription();
+        break;
+    case 'Basket':
+        basket();
+        break;
+
+    // default : accueil();
     break;
 }
     

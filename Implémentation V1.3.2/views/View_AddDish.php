@@ -1,4 +1,4 @@
-<?php Ob_start(); ?>
+<?php Ob_start();  ?>
     <div class="container">
         <div class="card card-register mx-auto mt-5">
             <!-- formulaire  d'ajout de plat -->
@@ -30,6 +30,35 @@
                         <div class="form-label-group">
                             <input type="file" id="dishImages" name="dishImages" class="form-control" value="0" accept=".png, .jpeg" multiple />
                             <label for="dishImages">Images</label>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-3">
+                            <?php if (isset($intos))
+                                foreach($intos as $into) : ?>
+                                    <div>
+                                        <label class="checkboxLabel" for="particularity_<?=$into['idParticularities']?>"><?=$into['Name']?></label>
+                                        <input type="checkbox" name="particularity_<?=$into['idParticularities']?>" id="particularity_<?=$into['idParticularities']?>">
+                                    </div>
+                                <?php endforeach; ?>
+                        </div>
+                        <div class="col-md-3">
+                            <?php if (isset($allergies))
+                                foreach($allergies as $allergy) : ?>
+                                    <div>
+                                        <label class="checkboxLabel" for="particularity_<?=$allergy['idParticularities']?>" ><?=$allergy['Name']?></label>
+                                        <input type="checkbox" name="particularity_<?=$allergy['idParticularities']?>" id="particularity_<?=$allergy['idParticularities']?>">
+                                    </div>
+                                <?php endforeach; ?>
+                        </div>
+                        <div class="col-md-3">
+                            <?php if (isset($diets))
+                                foreach($diets as $diet) : ?>
+                                    <div>
+                                        <label class="checkboxLabel" for="particularity_<?=$diet['idParticularities']?>"><?=$diet['Name']?></label>
+                                        <input type="checkbox" name="particularity_<?=$diet['idParticularities']?>" id="particularity_<?=$diet['idParticularities']?>">
+                                    </div>
+                                <?php endforeach; ?>
                         </div>
                     </div>
                     <div><input class="btn btn-primary btn-block" type="submit"  value="Ajouter le plat"></div>
