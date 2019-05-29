@@ -87,7 +87,8 @@ switch($action){
         parameterspage();
         break;
     case 'UserUpdate':
-        inscription();
+        userupdate();
+     //   inscription();
         break;
     case 'Basket':
         basket();
@@ -95,7 +96,12 @@ switch($action){
     case 'ConfirmOrder':
         confirmorder();
         break;
-
+    case 'ParticularityUpdate':
+        partiularityupdate();
+        break;
+    case 'AddParticularity':
+        addparticularity();
+        break;
     default : accueil();
     break;
 }

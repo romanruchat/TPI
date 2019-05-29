@@ -83,7 +83,25 @@ function login(){
 //Récupére les plats puis affiche la page des plats
 function getdishes(){
 
-    $dishes = get_dishes();
+   /* $userDish = array();
+
+    if(isset($_SESSION['loggedUser'])){
+        $dishes = get_dishes_user($_SESSION['loggedUser']);
+        $all = get_dishes();
+        foreach($dishes as $dish){
+            foreach ($all as $alldish){
+                if($dish = $alldish){
+
+                    array_push($userDish, $dish);
+                }
+            }
+        }
+        return $userDish;
+    }else {
+
+    }*/
+
+   $dishes = get_dishes();
     require('views/View_Plats.php');
 }
 
@@ -286,7 +304,20 @@ if (strpos($user['Email'], "@cpnv.ch") !== false ) {
     require('views/View_Panier.php');
 }
 
+function partiularityupdate(){
 
+    require('views/View_ParticularityUpdate.php');
+}
+
+function addparticularity(){
+
+    add_particularity($_POST['particularityName'], $_POST['particularities']);
+    parameterspage();
+}
+
+function userupdate(){
+
+}
 ?>
 
 

@@ -192,9 +192,25 @@ function dish_particularities($idParticularities, $idDish){
 }
 
 
-/*function add_dish_basket(){
+function get_dishes_user($idUser){
 
     // Connexion à la BD
     $connexion = get_bd();
 
-}*/
+    $request = $connexion->prepare('
+SELECT idDishes, Dishes.Name as Name, Prize, Description FROM Dishes INNER JOIN Particularities_has_Dishes on Particularities_has_Dishes.Dishes_idDishes = Dishes.idDishes 
+INNER JOIN Particularities on Particularities.idParticularities =  Particularities_has_Dishes.Particularities_idParticularities
+INNER JOIN User_has_Particularities on Particularities.idParticularities =  Particularities_has_dishes.Particularities_idParticularities WHERE User_idUsers = ? GROUP BY Dishes_idDishes;');
+    $request->execute(array($idUser));
+    $data=$request->fetchAll();
+    return $data;
+}
+
+function add_particularity($nameParticularity, $typeParticularity){
+
+    // Connexion à la BD
+    $connexion = get_bd();
+
+    $request = $connexion->prepare('INSERT INTO Particularities (Name, Type) VALUES (?, ?)');
+    $request->execute(array($nameParticularity, $typeParticularity));
+}
