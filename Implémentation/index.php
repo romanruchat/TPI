@@ -87,8 +87,8 @@ switch($action){
         parameterspage();
         break;
     case 'UserUpdate':
-        userupdate();
-     //   inscription();
+       // userupdate();
+       inscription();
         break;
     case 'Basket':
         basket();

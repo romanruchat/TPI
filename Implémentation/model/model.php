@@ -192,7 +192,7 @@ function dish_particularities($idParticularities, $idDish){
 }
 
 
-function get_dishes_user($idUser){
+/*function get_dishes_user($idUser){
 
     // Connexion à la BD
     $connexion = get_bd();
@@ -205,6 +205,7 @@ INNER JOIN User_has_Particularities on Particularities.idParticularities =  Part
     $data=$request->fetchAll();
     return $data;
 }
+*/
 
 function add_particularity($nameParticularity, $typeParticularity){
 

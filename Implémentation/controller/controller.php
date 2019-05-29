@@ -225,14 +225,14 @@ function parameterspage(){
     require('views/View_ParametersPage.php');
 }
 
-$dishesSelected = array();
-
 function adddishbasket(){
 
-    global $dishesSelected;
-    $dish = get_dish(["id" => $_POST['idDish']]);
 
-    array_push($dishesSelected, $dish);
+    $dish = get_dish(["id" => $_POST['idDish']]);
+    if(!isset($_SESSION['dishesSelected'])){
+        $_SESSION['dishesSelected'] = array();
+    }
+    array_push($_SESSION['dishesSelected'], $dish);
     require('views/View_Panier.php');
 }
 
@@ -243,6 +243,8 @@ function basket(){
 
 function confirmorder(){
 
+    //Vide le panier
+    $_SESSION['dishesSelected'] = array();
     $user = get_user(["id" => $_SESSION['loggedUser']]);
 if (strpos($user['Email'], "@cpnv.ch") !== false ) {
     ini_set("SMTP", "mail.cpnv.ch");
@@ -317,6 +319,9 @@ function addparticularity(){
 
 function userupdate(){
 
+    var_dump($_POST['idUser']);
+   // $data = get_user()
+    require('views/View_UpdateUser.php');
 }
 ?>
 

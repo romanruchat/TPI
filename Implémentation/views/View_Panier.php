@@ -4,8 +4,8 @@
     <div class="form-group">
         <div class="form-row">
             <!-- Affiche les plats -->
-            <?php if(isset($dishesSelected))
-                foreach($dishesSelected as $dishSelected) : ?>
+            <?php if(isset($_SESSION['dishesSelected']))
+                foreach($_SESSION['dishesSelected'] as $dishSelected) : ?>
                     <div class="col-md-3">
                         <form action="?action=ConfirmOrder" method="post">
                             <div class="form-label-group">
