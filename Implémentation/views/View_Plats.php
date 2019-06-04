@@ -37,7 +37,7 @@
                                         <input hidden id="idDish" name="idDish" value="<?= $dish['idDishes']; ?>"/>
                                         <p><strong>Nom : </strong><?= $dish['Name']; ?></p>
                                         <p><strong>Prix : </strong><?= $dish['Prize']; ?></p>
-                                        <div class=""><img src="<?= $dish['img']; ?>"/></div>
+                                        <div class="" style="height: 40px, width: 40px;"><img src="<?= $dish['img']; ?>"/></div>
                                         <p><strong>Description : </strong><?= $dish['Description']; ?></p>
                                     </div>
                                     <div><input class="btn btn-primary btn-block" type="submit"  value="Ajouter au panier"></div>
@@ -47,6 +47,10 @@
                                     <form action="?action=DeleteDish" method="post">
                                         <input hidden id="idDish" name="idDish" value="<?= $dish['idDishes']; ?>"/>
                                         <div><input class="crossImage" type="submit" onClick="confirmation()"></div>
+                                    </form>
+                                    <form action="?action=UpdateDishPage" method="post">
+                                        <input hidden id="idDish" name="idDish" value="<?= $dish['idDishes']; ?>"/>
+                                        <div><input class="parametersImage" type="submit"></div>
                                     </form>
                                 <?php endif; ?>
                             </div>

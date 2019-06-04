@@ -207,7 +207,7 @@ function adddish(){
 
     add_dish($_POST['dishName'], $_POST['dishPrize'], $_POST['dishDescription']);
     $dish = get_dish(["name" => $_POST['dishName']]);
-    var_dump($dish);
+    $dish = get_dish(["name" => $_POST['dishName']]);
     $all = get_particularities_all();
     foreach($all as $particularity){
         if(!empty($_POST['particularity_'.$particularity['idParticularities']])){
@@ -354,14 +354,63 @@ function deselectdish(){
 }
 
 function deletedish(){
+
     delete_dish($_POST['idDish']);
-    plats();
+    $dishes = get_dishes();
+    require('views/View_Plats.php');
 }
 
 function deleteuser(){
 
     account_removal($_POST['idUser']);
     parameterspage();
+}
+
+function updateparticularity(){
+
+    update_particularity($_POST['idParticularities'], $_POST['particularityName'], $_POST['particularities']);
+    parameterspage();
+}
+
+function updatedishpage(){
+
+    $intos = array();
+    $allergies = array();
+    $diets = array();
+
+    $all = get_particularities_all();
+    $userParticularities = get_user_particularities($_POST['idDish']);
+
+    foreach($all as $particularity){
+        $particularity['checked'] = false;
+        foreach($userParticularities as $userParticularity){
+            if($userParticularity["idParticularities"] == $particularity["idParticularities"]){
+                $particularity['checked'] = true;
+            }
+        }
+        switch ($particularity["Type"]){
+            case 'intolerance':
+                array_push($intos, $particularity);
+                break;
+            case 'allergy':
+                array_push($allergies, $particularity);
+                break;
+            case 'diet':
+                array_push($diets, $particularity);
+                break;
+
+        }
+    }
+
+    $data = get_dish(["id" => $_POST['idDish']]);
+    require('views/View_UpdateDishPage.php');
+
+}
+
+function updatedish(){
+
+    update_dish($_POST['dishName'], $_POST['dishPrize'], $_POST['dishDescription'], $_POST['idDish']);
+    plats();
 }
 ?>
 

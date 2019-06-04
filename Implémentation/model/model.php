@@ -238,7 +238,7 @@ function get_particularity($idParticularities){
     $request = $connexion->prepare('SELECT * FROM Particularities WHERE idParticularities = ?');
     $request->execute(array($idParticularities));
     $data=$request->fetchAll();
-    return $data;
+    return $data[0];
 }
 
 function delete_dish($idDish){
@@ -249,4 +249,33 @@ function delete_dish($idDish){
     $request = $connexion->prepare('UPDATE Dishes SET Status = "0" WHERE idDishes = ?');
     $request->execute(array($idDish));
 
+}
+
+function update_particularity($idParticularity, $name, $type){
+
+    // Connexion à la BD
+    $connexion = get_bd();
+
+    $request = $connexion->prepare('UPDATE Particularities SET Name = ?, Type = ? WHERE idParticularities = ?');
+    $request->execute(array($name, $type, $idParticularity));
+}
+
+function get_dish_particularities($idDish){
+
+    // Connexion à la BD
+    $connexion = get_bd();
+
+    $request = $connexion->prepare('SELECT Particularities_idParticularities AS idParticularities FROM Particularities_has_Dishes WHERE Dishes_idDishes = ?');
+    $request->execute(array($idDish));
+    $data=$request->fetchAll();
+    return $data;
+}
+
+function update_dish($dishName, $dishPrize, $dishDescription, $idDish){
+
+    // Connexion à la BD
+    $connexion = get_bd();
+
+    $request = $connexion->prepare('UPDATE Dishes SET Name = ?, Prize = ?, Description = ? WHERE idDishes = ?');
+    $request->execute(array($dishName, $dishPrize, $dishDescription, $idDish));
 }

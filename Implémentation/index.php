@@ -115,6 +115,15 @@ switch($action){
     case'DeleteUser':
         deleteuser();
         break;
+    case'UpdateParticularity':
+        updateparticularity();
+        break;
+    case'UpdateDishPage':
+        updatedishpage();
+        break;
+    case'UpdateDish':
+        updatedish();
+        break;
     default : accueil();
     break;
 }

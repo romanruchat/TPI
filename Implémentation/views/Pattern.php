@@ -15,7 +15,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta name="description" content="">
   <meta name="author" content="">
-
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
   <title>Rêveries</title>
 
   <!-- Bootstrap core CSS -->
