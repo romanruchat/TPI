@@ -2,36 +2,47 @@
 
 
 <div class="parametersMain">
-
+    <div class="col-md-4">
+        <a href="?action=Inscription">
+            <input class="btn btn-primary btn-block" type="submit" value="Ajouter un utilisateur">
+        </a>
+    </div>
     <div class="scrollArea">
     <?php if(isset($users))
     foreach($users as $user) : ?>
         <div class="userData">
-            <form action="?action=UserUpdate" method="post">
+            <form action="?action=UserUpdatePage" method="post">
             <input hidden id="idUser" name="idUser" value="<?= $user['idUser']; ?>"/>
             <div><strong>Nom : </strong><?= $user['Name']; ?></div>
             <div><strong>Prénom : </strong><?= $user['First_Name']; ?></div>
             <div><strong>Ville : </strong><?= $user['City']; ?></div>
             <div class="userDataParameters">
-                <div ><input type="submit" class="parametersImage"> </div>
+                <div><input type="submit" class="parametersImage"> </div>
             </div>
+            </form>
         </div>
     <?php endforeach; ?>
     </div>
-<div class="scrollArea">
-    <?php if(isset($particularities))
-        foreach($particularities as $particularity) : ?>
-            <div class="userData">
+    <div class="col-md-4">
+        <a href="?action=AddParticularityPage">
+            <input class="btn btn-primary btn-block" type="submit" value="Ajouter une spécificité">
+        </a>
+    </div>
+    <div class="scrollArea">
+        <?php if(isset($particularities))
+            foreach($particularities as $particularity) : ?>
+        <div class="userData">
+            <form action="?action=ParticularityUpdatePage" method="post">
+                <input hidden id="idParticularities" name="idParticularities" value="<?= $particularity['idParticularities']; ?>"/>
                 <div><strong>Nom : </strong><?= $particularity['Name']; ?></div>
                 <div><strong>Type : </strong><?= $particularity['Type']; ?></div>
                 <div class="userDataParameters">
-                    <a class="nav-link" href="?action=ParticularityUpdate">
-                        <div class="parametersImage"></div>
-                    </a>
+                    <div><input type="submit" class="parametersImage"></div>
                 </div>
-            </div>
+            </form>
+        </div>
         <?php endforeach; ?>
-</div>
+    </div>
 </div>
 
 

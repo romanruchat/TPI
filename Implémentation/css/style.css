@@ -2,7 +2,7 @@
     min-height: calc(100vh - 56px - 120px);
     overflow: hidden;
 }
-.dishesParametersImage, .basketImage, .profileImage, .parametersImage {
+.dishesParametersImage, .basketImage, .profileImage, .parametersImage, .crossImage {
     height: 30px;
     width: 30px;
     background-color: white;
@@ -20,6 +20,10 @@
 }
 .basketImage {
     background-image: url(/assets/img/basket.png);
+}
+
+.crossImage{
+    background-image: url(/assets/img/cross.png);
 }
 
 

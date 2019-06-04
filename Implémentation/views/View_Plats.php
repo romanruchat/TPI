@@ -37,14 +37,20 @@
                                         <input hidden id="idDish" name="idDish" value="<?= $dish['idDishes']; ?>"/>
                                         <p><strong>Nom : </strong><?= $dish['Name']; ?></p>
                                         <p><strong>Prix : </strong><?= $dish['Prize']; ?></p>
+                                        <div class=""><img src="<?= $dish['img']; ?>"/></div>
                                         <p><strong>Description : </strong><?= $dish['Description']; ?></p>
                                     </div>
-                                    <?php ?>
                                     <div><input class="btn btn-primary btn-block" type="submit"  value="Ajouter au panier"></div>
                                 </form>
+                                <!-- Affiche les boutons uniquement si l'utilisateur est  administrateur -->
+                                <?php if (isset($_SESSION['User_Type']) && $_SESSION['User_Type'] == "1") : ?>
+                                    <form action="?action=DeleteDish" method="post">
+                                        <input hidden id="idDish" name="idDish" value="<?= $dish['idDishes']; ?>"/>
+                                        <div><input class="crossImage" type="submit" onClick="confirmation()"></div>
+                                    </form>
+                                <?php endif; ?>
                             </div>
                     <?php endforeach ?>
-
                 </div>
             </div>
         </div>
@@ -54,5 +60,13 @@
 <?php require ("Pattern.php"); ?>
 
 
+<!-- Script javascript permettant d'ouvrir la boîte de confirmation de suppression du plat -->
+<SCRIPT>
+    function confirmation() {
+        var msg = "Êtes-vous sur de vouloir supprimer le plat ?";
+        if (confirm(msg))
+            location.replace("?action=DeleteDish");
+    }
+</SCRIPT>
 
 

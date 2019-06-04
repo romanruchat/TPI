@@ -83,10 +83,10 @@ function login(){
 //Récupére les plats puis affiche la page des plats
 function getdishes(){
 
-   /* $userDish = array();
-
+  /* $userDish = array();
+    $dishes = get_dishes_user($_SESSION['loggedUser']);
     if(isset($_SESSION['loggedUser'])){
-        $dishes = get_dishes_user($_SESSION['loggedUser']);
+
         $all = get_dishes();
         foreach($dishes as $dish){
             foreach ($all as $alldish){
@@ -98,9 +98,9 @@ function getdishes(){
         }
         return $userDish;
     }else {
-
-    }*/
-
+        $dishes = get_dishes();
+    }
+*/
    $dishes = get_dishes();
     require('views/View_Plats.php');
 }
@@ -225,15 +225,23 @@ function parameterspage(){
     require('views/View_ParametersPage.php');
 }
 
-function adddishbasket(){
+function adddishbasket()
+{
 
-
-    $dish = get_dish(["id" => $_POST['idDish']]);
-    if(!isset($_SESSION['dishesSelected'])){
-        $_SESSION['dishesSelected'] = array();
-    }
+    if (isset($_SESSION['loggedUser']))
+    {
+        $dish = get_dish(["id" => $_POST['idDish']]);
+        if (!isset($_SESSION['dishesSelected'])) {
+            $_SESSION['dishesSelected'] = array();
+        }
     array_push($_SESSION['dishesSelected'], $dish);
-    require('views/View_Panier.php');
+    }else{
+        $_SESSION['dishesSelected'] = array();
+        ?>
+        <script>document.location.href="index.php?action=Connexion&errorMessage=Vous devez être connecté pour pouvoir ajouter au panier";</script>
+        <?php
+    }
+    basket();
 }
 
 function basket(){
@@ -243,8 +251,6 @@ function basket(){
 
 function confirmorder(){
 
-    //Vide le panier
-    $_SESSION['dishesSelected'] = array();
     $user = get_user(["id" => $_SESSION['loggedUser']]);
 if (strpos($user['Email'], "@cpnv.ch") !== false ) {
     ini_set("SMTP", "mail.cpnv.ch");
@@ -258,9 +264,13 @@ if (strpos($user['Email'], "@cpnv.ch") !== false ) {
 //=====Déclaration des messages au format texte et au format HTML.
     $message_txt = "Bonjour ! 
             Ceci est un message automatique de confirmation de la commande de " . $user['First_Name'] . " " . $user['Name'] . "
-            Voici votre commande :
-            L'affichage de la commande apparaitra dans peu.
-            Nous nous rejouissons de vous retrouver dans peu de temps !";
+            Voici votre commande :" ;
+                if(isset($_SESSION['dishesSelected']))
+                foreach($_SESSION['dishesSelected'] as $dishSelected) :
+              " Nom du plat " .$dishSelected['Name']. " " .$dishSelected['Prize']." " .$dishSelected['Description']."
+            "; endforeach;
+            "Nous nous rejouissons de vous retrouver dans peu de temps !";
+
     // $message_html = "<html><head></head><body><b>Salut à tous</b>, voici un e-mail envoyé par un <i>script PHP</i>.</body></html>";
 //==========
 
@@ -302,13 +312,14 @@ if (strpos($user['Email'], "@cpnv.ch") !== false ) {
 }else{
     echo "Le site ne peut pas encore envoyer d'email à ce type d'adresse email, merci de votre compréhension";
 }
-
+    //Vide le panier
+    $_SESSION['dishesSelected'] = array();
     require('views/View_Panier.php');
 }
 
-function partiularityupdate(){
+function addparticularitypage(){
 
-    require('views/View_ParticularityUpdate.php');
+    require('views/View_AddParticularityPage.php');
 }
 
 function addparticularity(){
@@ -317,11 +328,40 @@ function addparticularity(){
     parameterspage();
 }
 
-function userupdate(){
+function updateuserpage(){
 
-    var_dump($_POST['idUser']);
-   // $data = get_user()
-    require('views/View_UpdateUser.php');
+    $data = get_user(["id" => $_POST['idUser']]);
+    require('views/View_UpdateUserPage.php');
+
+}
+
+function updateuser(){
+
+    update_user($_POST['lastName'], $_POST['firstName'],  $_POST['inputEmail'], $_POST['streetName'], $_POST['postCode'], $_POST['inputCity'], $_POST['floorNumber'], $_POST['streetNumber'], $_POST['userType'], $_POST['idUser']);
+    parameterspage();
+}
+
+function particularityupdatepage(){
+
+    $data = get_particularity($_POST['idParticularities']);
+   require('views/View_UpdateParticularityPage.php');
+}
+
+function deselectdish(){
+
+   array_splice($_SESSION['dishesSelected'], 0, 1);
+    basket();
+}
+
+function deletedish(){
+    delete_dish($_POST['idDish']);
+    plats();
+}
+
+function deleteuser(){
+
+    account_removal($_POST['idUser']);
+    parameterspage();
 }
 ?>
 

@@ -71,7 +71,7 @@
 <?php require ("Pattern.php");?>
 
 <!-- Script javascript permettant d'ouvrir la boîte de confirmation de suppression de compte -->
-<SCRIPT LANGUAGE="JavaScript">
+<SCRIPT>
     function confirmation() {
         var msg = "Êtes-vous sur de vouloir supprimer votre compte ?";
         if (confirm(msg))

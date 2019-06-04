@@ -69,7 +69,7 @@ function get_dishes(){
     // Connexion à la BD
     $connexion = get_bd();
 
-    $request = $connexion->prepare('SELECT * FROM Dishes');
+    $request = $connexion->prepare('SELECT Dishes.idDishes, Dishes.Name, Dishes.Prize, Dishes.Description, Dishes.Status, Images.Name as img FROM Dishes INNER JOIN Images ON Dishes.idDishes = Images.Dishes_idDishes WHERE Dishes.Status = "1";');
     $request->execute();
     $data=$request->fetchAll();
     return $data;
@@ -192,7 +192,7 @@ function dish_particularities($idParticularities, $idDish){
 }
 
 
-/*function get_dishes_user($idUser){
+function get_dishes_user($idUser){
 
     // Connexion à la BD
     $connexion = get_bd();
@@ -200,12 +200,11 @@ function dish_particularities($idParticularities, $idDish){
     $request = $connexion->prepare('
 SELECT idDishes, Dishes.Name as Name, Prize, Description FROM Dishes INNER JOIN Particularities_has_Dishes on Particularities_has_Dishes.Dishes_idDishes = Dishes.idDishes 
 INNER JOIN Particularities on Particularities.idParticularities =  Particularities_has_Dishes.Particularities_idParticularities
-INNER JOIN User_has_Particularities on Particularities.idParticularities =  Particularities_has_dishes.Particularities_idParticularities WHERE User_idUsers = ? GROUP BY Dishes_idDishes;');
+INNER JOIN User_has_Particularities on Particularities.idParticularities =  Particularities_has_dishes.Particularities_idParticularities WHERE NOT User_idUsers = ? GROUP BY Dishes_idDishes;');
     $request->execute(array($idUser));
     $data=$request->fetchAll();
     return $data;
 }
-*/
 
 function add_particularity($nameParticularity, $typeParticularity){
 
@@ -214,4 +213,40 @@ function add_particularity($nameParticularity, $typeParticularity){
 
     $request = $connexion->prepare('INSERT INTO Particularities (Name, Type) VALUES (?, ?)');
     $request->execute(array($nameParticularity, $typeParticularity));
+
+}
+
+function update_user($lastName, $firstName, $email, $streetName, $postCode, $city,  $floorNumber, $streetNumber, $userType, $idUser){
+
+    if(isset($userType) && $userType == "administrateur"){
+        $userType = '1';
+    }else{
+        $userType = '0';
+    }
+
+    // Connexion à la BD
+    $connexion = get_bd();
+    $request = $connexion->prepare('UPDATE User Set Name = ?, First_Name = ?, Email = ?, Street = ?, Postcode = ?, City = ?, Floor_Number = ?, Street_Number = ?, User_Type = ? WHERE idUser = ?');
+    $request->execute(array($lastName, $firstName, $email, $streetName, $postCode, $city,  $floorNumber, $streetNumber, $userType, $idUser));
+}
+
+function get_particularity($idParticularities){
+
+    // Connexion à la BD
+    $connexion = get_bd();
+
+    $request = $connexion->prepare('SELECT * FROM Particularities WHERE idParticularities = ?');
+    $request->execute(array($idParticularities));
+    $data=$request->fetchAll();
+    return $data;
+}
+
+function delete_dish($idDish){
+
+    // Connexion à la BD
+    $connexion = get_bd();
+
+    $request = $connexion->prepare('UPDATE Dishes SET Status = "0" WHERE idDishes = ?');
+    $request->execute(array($idDish));
+
 }

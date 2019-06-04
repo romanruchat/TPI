@@ -46,7 +46,6 @@ switch($action){
         $menuPage = "connexion";
         connexion();
         break;
-
     case 'AddUser':
         adduser();
         break;
@@ -86,21 +85,35 @@ switch($action){
     case 'ParametersPage':
         parameterspage();
         break;
-    case 'UserUpdate':
-       // userupdate();
-       inscription();
-        break;
     case 'Basket':
         basket();
         break;
     case 'ConfirmOrder':
         confirmorder();
         break;
-    case 'ParticularityUpdate':
-        partiularityupdate();
+    case 'AddParticularityPage':
+        addparticularitypage();
         break;
     case 'AddParticularity':
         addparticularity();
+        break;
+    case 'DeselectDish':
+        deselectdish();
+        break;
+    case'UserUpdatePage':
+        updateuserpage();
+        break;
+    case 'UpdateUser':
+        updateuser();
+        break;
+    case 'ParticularityUpdatePage':
+        particularityupdatepage();
+        break;
+    case 'DeleteDish':
+        deletedish();
+        break;
+    case'DeleteUser':
+        deleteuser();
         break;
     default : accueil();
     break;
