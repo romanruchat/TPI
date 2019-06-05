@@ -1,5 +1,6 @@
 <?php Ob_start(); ?>
 
+<div class="ErrorMsg"><?=@$_GET["Message"]?></div>
 <div class="card-body">
     <div class="form-group">
         <div class="form-row">

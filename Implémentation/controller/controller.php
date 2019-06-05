@@ -50,13 +50,13 @@ function adduser(){
 
     if($_POST['inputPassword'] != $_POST['confirmPassword']){
         ?>
-        <script>document.location.href="index.php?action=Inscription&errorMessage=Mot de passe non similaire";</script>
+        <script>document.location.href="index.php?action=Inscription&Message=Mot de passe non similaire";</script>
         <?php
         exit();
     }
     add_user($_POST['lastName'], $_POST['firstName'], $_POST['inputPassword'],  $_POST['inputEmail'], $_POST['streetName'], $_POST['postCode'], $_POST['inputCity'], $_POST['floorNumber'], $_POST['streetNumber'], $_POST['userType']);
     ?>
-    <script>document.location.href="index.php?action=Accueil&errorMessage=Inscription réussie";</script>
+    <script>document.location.href="index.php?action=Accueil&Message=Inscription réussie";</script>
     <?php
 }
 
@@ -238,10 +238,21 @@ function adddishbasket()
     }else{
         $_SESSION['dishesSelected'] = array();
         ?>
-        <script>document.location.href="index.php?action=Connexion&errorMessage=Vous devez être connecté pour pouvoir ajouter au panier";</script>
+        <script>document.location.href="index.php?action=Connexion&Message=Vous devez être connecté pour pouvoir ajouter au panier";</script>
         <?php
     }
     basket();
+}
+
+function msgbasket(){
+
+    if(!empty($_SESSION['dishesSelected'])){
+        ?>
+        <script>document.location.href="index.php?action=Basket&Message=Votre panier est vide ! Remplissez le de plats !";</script>
+        <?php
+    } else {
+        basket();
+    }
 }
 
 function basket(){
@@ -357,7 +368,7 @@ function deletedish(){
 
     delete_dish($_POST['idDish']);
     $dishes = get_dishes();
-    require('views/View_Plats.php');
+    ?><script>document.location.href="index.php?action=Plats&Message=Suppression réussie";</script><?php
 }
 
 function deleteuser(){

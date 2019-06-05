@@ -90,8 +90,8 @@
                         </div>
                 </div>
                 <?php endif; ?>
-                <div><input class="btn btn-primary btn-block" type="submit"  value="S'inscrire"></div>
-                <div class="ErrorMsg"><?=@$_GET["errorMessage"]?></div>
+                <div><input class="btn btn-primary btn-block" type="submit"  value="Créer le compte"></div>
+                <div class="Msg"><?=@$_GET["Message"]?></div>
             </form>
         </div>
     </div>

@@ -88,6 +88,9 @@ switch($action){
     case 'Basket':
         basket();
         break;
+    case 'MsgBasket':
+        msgbasket();
+        break;
     case 'ConfirmOrder':
         confirmorder();
         break;
@@ -125,6 +128,7 @@ switch($action){
         updatedish();
         break;
     default : accueil();
+    $menuPage = "accueil";
     break;
 }
     

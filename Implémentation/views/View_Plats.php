@@ -6,6 +6,7 @@
 
 
 <section class="py-5">
+    <div class="ErrorMsg"><?=@$_GET["Message"]?></div>
     <div class="container">
         <div class="card-header dishesHeader">
             <div class="col-md-4">
@@ -29,7 +30,7 @@
             <div class="form-group">
                 <div class="form-row">
                     <!-- Affiche les plats -->
-                    <?php if(isset($dishes))
+                    <?php if(isset($dishes)) :
                     foreach($dishes as $dish) : ?>
                             <div class="col-md-3">
                                 <form action="?action=AddDishBasket" method="post">
@@ -54,7 +55,8 @@
                                     </form>
                                 <?php endif; ?>
                             </div>
-                    <?php endforeach ?>
+                    <?php endforeach; ?>
+                    <?php endif; ?>
                 </div>
             </div>
         </div>

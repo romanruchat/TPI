@@ -18,7 +18,7 @@
                     </div>
                 </div>
                 <div><input class="btn btn-primary btn-block" type="submit" value="Se connecter">  </div>
-                <div class="ErrorMsg"><?=@$_GET["errorMessage"]?></div>
+                <div class="Msg"><?=@$_GET["Message"]?></div>
             </form>
         </div>
     </div>
