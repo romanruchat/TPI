@@ -1,33 +1,39 @@
 <?php Ob_start(); ?>
 
-<div class="ErrorMsg"><?=@$_GET["Message"]?></div>
-<div class="card-body">
-    <div class="form-group">
-        <div class="form-row">
-            <!-- Affiche les plats -->
-            <?php if(isset($_SESSION['dishesSelected']))
-                foreach($_SESSION['dishesSelected'] as $dishSelected) : ?>
-                    <div class="col-md-3">
-                        <form action="?action=DeselectDish" method="post">
-                            <div class="form-label-group">
-                                <input hidden id="idDishSelected" name="idDishSelected" value="<?= $dishSelected['idDishes']; ?>"/>
-                                <p><strong>Nom : </strong><?= $dishSelected['Name']; ?></p>
-                                <p><strong>Prix : </strong><?= $dishSelected['Prize']; ?></p>
-                                <p><strong>Description : </strong><?= $dishSelected['Description']; ?></p>
-                                <div><input class="crossImage" type="submit"></div>
-                            </div>
-                        </form>
-                    </div>
-                <?php endforeach ?>
+<section class="py-5">
+    <div class="ErrorMsg"><?=$message?></div>
+    <div class="card-body dishesContainer">
+        <!-- Affiche les plats -->
+        <?php if(!$emptyBasket)
+            foreach($_SESSION['dishesSelected'] as $dishSelected) : ?>
+                <div class="dishCardBasket">
+                    <form action="?action=DeselectDish" method="post">
+                        <input hidden id="idDishSelected" name="idDishSelected" value="<?= $dishSelected['idDishes']; ?>"/>
+                        <div class="dishName"><?= $dishSelected['Name']; ?></div>
+                        <div class="dishPrize"><?= $dishSelected['Prize']; ?>.-</div>
+                        <div class="dishDescription"><?= $dishSelected['Description']; ?></div>
+                       <div class="dishCount"><?= $dishSelected['count']; ?></div>
+                        <div class="dishDelete"><input class="crossImage" type="submit"></div>
+                    </form>
+                </div>
+        <?php endforeach;?>
+
+        <?php if($emptyBasket):?>
+            <div class="emptyBasket">Le panier est vide</div>
+        <?php else:?>
+        <div class="basketSubmitButton">
             <a href="#">
-                <div class="btn btn-primary btn-block" onClick="confirmation()" name="Confirmation"> <label for="Confirmation">Confirmation</label></div>
+               <button class="btn btn-primary btn-block" name="Confirmation" onClick="confirmation('?action=ConfirmOrder')">Confirmation</button>
             </a>
         </div>
+        <?php endif;?>
     </div>
-</div>
+</section>
 
 <?php $contenu = ob_get_clean();?>
 <?php require ("Pattern.php");?>
+
+
 
 <!-- Script javascript permettant d'ouvrir la boîte de confirmation de suppression de commande -->
 <SCRIPT>

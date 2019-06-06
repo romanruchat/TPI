@@ -21,7 +21,7 @@
                         </div>
                     </div>
                     <!-- formulaire de modifications des spécificités du profil utilisateur -->
-                        <form action="?action=AddParticularities" method="post">
+                        <form action="?action=AddUserParticularities" method="post">
                                 <div class="form-row">
                                     <div class="col-md-3">
                                         <?php if (isset($intos))
@@ -57,7 +57,7 @@
                                         <input class="btn btn-primary btn-block" type="submit"  value="Modifier mes données">
                                     </div>
                                     <div class="col-md-6">
-                                        <input class="btn btn-primary btn-block" onClick="confirmation()" type="submit" value="Supprimer votre compte">
+                                        <button class="btn btn-primary btn-block" type="button" onclick="confirmation('?action=Removal&idUser=<?= $_SESSION['loggedUser']; ?>')">Supprimer le compte</button>
                                     </div>
                                 </div>
                             </div>
@@ -72,9 +72,11 @@
 
 <!-- Script javascript permettant d'ouvrir la boîte de confirmation de suppression de compte -->
 <SCRIPT>
-    function confirmation() {
-        var msg = "Êtes-vous sur de vouloir supprimer votre compte ?";
-        if (confirm(msg))
-            location.replace(View_Profil.php);
+    function confirmation(redirect) {
+        console.log(redirect);
+        var msg = "Êtes-vous sur de vouloir supprimer le compte ?";
+        if (confirm(msg)) {
+            location.replace(redirect);
+        }
     }
 </SCRIPT>

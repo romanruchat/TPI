@@ -87,7 +87,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="?action=MsgBasket">
+                        <a class="nav-link" href="?action=Basket">
                             <div class="basketImage"></div>
                         </a>
                     </li>

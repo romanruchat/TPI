@@ -54,7 +54,7 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-label-group">
-                                <input type="number" id="streetNumber" name="streetNumber" class="form-control" value="<?= $data['Street_Number']; ?>" placeholder="Numéro de rue" required="required"/>
+                                <input type="text" id="streetNumber" name="streetNumber" class="form-control" value="<?= $data['Street_Number']; ?>" placeholder="Numéro de rue" required="required"/>
                                 <label for="streetNumber">Numéro de rue</label>
                             </div>
                         </div>
@@ -89,10 +89,7 @@
                             <div class="ErrorMsg"><?=@$_GET["errorMessage"]?></div>
                         </div>
                         <div class="col-md-6">
-                            <form action="?action=DeleteUser" method="post">
-                                <input hidden id="idUser" name="idUser" value="<?= $data['idUser']; ?>"/>
-                                 <div><input class="btn btn-primary btn-block" onClick="confirmation()" type="submit"  value="Supprimer le compte"></div>
-                            </form>
+                            <button class="btn btn-primary btn-block" type="button" onclick="confirmation('?action=DeleteUser&idUser=<?= $data['idUser']; ?>')">Supprimer le compte</button>
                         </div>
                     </div>
                 </div>
@@ -106,9 +103,12 @@
 
 <!-- Script javascript permettant d'ouvrir la boîte de confirmation de suppression de compte -->
 <SCRIPT>
-    function confirmation() {
+    function confirmation(redirect) {
+        console.log(redirect);
         var msg = "Êtes-vous sur de vouloir supprimer le compte ?";
-        if (confirm(msg))
-            location.replace(View_Profil.php);
+        if (confirm(msg)) {
+            location.replace(redirect);
+        }
+
     }
 </SCRIPT>

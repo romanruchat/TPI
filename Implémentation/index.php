@@ -76,8 +76,8 @@ switch($action){
     case 'AddDish':
         adddish();
         break;
-    case 'AddParticularities':
-        addparticularities();
+    case 'AddUserParticularities':
+        adduserparticularities();
         break;
     case 'AddDishBasket':
         adddishbasket();
@@ -88,9 +88,7 @@ switch($action){
     case 'Basket':
         basket();
         break;
-    case 'MsgBasket':
-        msgbasket();
-        break;
+
     case 'ConfirmOrder':
         confirmorder();
         break;
@@ -127,6 +125,11 @@ switch($action){
     case'UpdateDish':
         updatedish();
         break;
+    case'DeleteParticularity':
+        deleteparticularity();
+        break;
+    case'InformationsDishPage':
+        informationsdishPage();
     default : accueil();
     $menuPage = "accueil";
     break;

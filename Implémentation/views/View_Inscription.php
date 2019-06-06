@@ -53,7 +53,7 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-label-group">
-                                <input type="number" id="postCode" name="postCode" class="form-control" placeholder="Code Postal" value="1000" required="required"/>
+                                <input type="number" id="postCode" name="postCode" class="form-control" placeholder="Code Postal" value="1000" min="0" required="required"/>
                                 <label for="postCode">Code Postal</label>
                             </div>
                         </div>
@@ -69,13 +69,13 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-label-group">
-                                <input type="number" id="streetNumber" name="streetNumber" class="form-control" placeholder="Numéro de rue" value="0" required="required"/>
+                                <input type="text" id="streetNumber" name="streetNumber" class="form-control" placeholder="Numéro de rue" value="0" min="0" required="required"/>
                                 <label for="streetNumber">Numéro de rue</label>
                             </div>
                         </div>
                         <div class="col-md-3">
                             <div class="form-label-group">
-                                <input type="number" id="floorNumber" name="floorNumber" class="form-control" placeholder="Numéro d'étage" value="0" required="required"/>
+                                <input type="number" id="floorNumber" name="floorNumber" class="form-control" placeholder="Numéro d'étage" value="0" min="0" required="required"/>
                                 <label for="floorNumber">Numéro d'étage</label>
                             </div>
                         </div>

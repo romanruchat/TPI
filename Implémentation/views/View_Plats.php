@@ -26,39 +26,48 @@
             </div>
             <?php endif; ?>
         </div>
-        <div class="card-body">
-            <div class="form-group">
-                <div class="form-row">
-                    <!-- Affiche les plats -->
-                    <?php if(isset($dishes)) :
-                    foreach($dishes as $dish) : ?>
-                            <div class="col-md-3">
-                                <form action="?action=AddDishBasket" method="post">
-                                    <div class="form-label-group">
-                                        <input hidden id="idDish" name="idDish" value="<?= $dish['idDishes']; ?>"/>
-                                        <p><strong>Nom : </strong><?= $dish['Name']; ?></p>
-                                        <p><strong>Prix : </strong><?= $dish['Prize']; ?></p>
-                                        <div class="" style="height: 40px, width: 40px;"><img src="<?= $dish['img']; ?>"/></div>
-                                        <p><strong>Description : </strong><?= $dish['Description']; ?></p>
-                                    </div>
-                                    <div><input class="btn btn-primary btn-block" type="submit"  value="Ajouter au panier"></div>
-                                </form>
-                                <!-- Affiche les boutons uniquement si l'utilisateur est  administrateur -->
-                                <?php if (isset($_SESSION['User_Type']) && $_SESSION['User_Type'] == "1") : ?>
-                                    <form action="?action=DeleteDish" method="post">
-                                        <input hidden id="idDish" name="idDish" value="<?= $dish['idDishes']; ?>"/>
-                                        <div><input class="crossImage" type="submit" onClick="confirmation()"></div>
-                                    </form>
-                                    <form action="?action=UpdateDishPage" method="post">
-                                        <input hidden id="idDish" name="idDish" value="<?= $dish['idDishes']; ?>"/>
-                                        <div><input class="parametersImage" type="submit"></div>
-                                    </form>
-                                <?php endif; ?>
-                            </div>
-                    <?php endforeach; ?>
-                    <?php endif; ?>
+        <div class="card-body dishesContainer">
+            <!-- Affiche les plats -->
+            <?php if(isset($dishes)) :
+            foreach($dishes as $dish) : ?>
+                    <div class="dishCard">
+                        <div class="dishInformations">
+                            <form method="get">
+                                <input hidden name="action" value="InformationsDishPage"/>
+                                <input hidden name="idDish" value="<?= $dish['idDishes']; ?>"/>
+                                <input type="submit">
+                            </form>
+                        </div>
+                    <form action="?action=AddDishBasket" method="post">
+                        <input hidden id="idDish" name="idDish" value="<?= $dish['idDishes']; ?>"/>
+                        <div class="dishName"><?= $dish['Name']; ?></div>
+                        <div class="dishImage" style="background-image: url(<?= getDishImg($dish['img']); ?>)"></div>
+                        <div class="dishPrize"><?= $dish['Prize']; ?>.-</div>
+                        <div class="dishDescription"><?= $dish['Description']; ?></div>
+                        <div><input class="btn btn-primary btn-block" type="submit"  value="Ajouter au panier"></div>
+                    </form>
+
+                <!-- Affiche les boutons uniquement si l'utilisateur est  administrateur -->
+                <?php if (isset($_SESSION['User_Type']) && $_SESSION['User_Type'] == "1") : ?>
+                    <div class="dishButtons">
+                        <div class="dishUpdate">
+                            <form method="get">
+                                <input hidden name="action" value="UpdateDishPage"/>
+                                <input hidden name="idDish" value="<?= $dish['idDishes']; ?>"/>
+                                <input type="submit">
+                            </form>
+                        </div>
+                        <div class="dishDelete">
+                            <form action="?action=DeleteDish" method="post">
+                                <input hidden id="idDish" name="idDish" value="<?= $dish['idDishes']; ?>"/>
+                                <input type="submit" onClick="confirmation()">
+                            </form>
+                        </div>
+                    </div>
+                <?php endif; ?>
                 </div>
-            </div>
+            <?php endforeach; ?>
+            <?php endif; ?>
         </div>
     </div>
 </section>
@@ -74,5 +83,3 @@
             location.replace("?action=DeleteDish");
     }
 </SCRIPT>
-
-

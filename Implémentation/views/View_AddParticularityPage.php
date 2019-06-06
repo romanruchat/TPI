@@ -33,6 +33,7 @@
                 </div>
                 <div><input class="btn btn-primary btn-block" type="submit"  value="Ajout de la spécificité"></div>
                 <div class="ErrorMsg"><?=@$_GET["errorMessage"]?></div>
+
             </form>
         </div>
     </div>

@@ -34,32 +34,68 @@
     text-align: left;
 }
 .dishesHeader > * {
-    vertical-align: middle;
-}
-.searchForm {
-    display: inline-block;
-    width: 200px;
-}
-.searchForm > input {
-    width: 200px;
-}
-.dishTitle {
 
-    width: calc(100% - 400px);
+    vertical-align: middle;
     display: inline-block;
+    width: calc(100% / 3 - 1em * (2/3));
     text-align: center;
 
 }
+.searchForm {
+
+    display: inline-block;
+    width: 100%;
+    text-align: left;
+
+}
+.searchForm > input {
+
+    width: 100%;
+    height: 35px;
+    padding-left: 10px;
+
+}
+.dishTitle {
+
+    width: 100%;
+    display: inline-block;
+    text-align: center;
+    font-size: 30px;
+
+}
+
+.paramsUser, .paramsParticularities {
+    display: inline-block;
+    width: calc(50%);
+    max-width: 500px;
+    vertical-align: top;
+    text-align: center;
+}
 
 .scrollArea {
+
     overflow-y: scroll;
     border: #000000 1px solid;
-    max-height: 400px;
-    height: 100%;
+    height: 400px;
     width: 100%;
     max-width: 350px;
     display: inline-block;
     text-align: left;
+    margin-top: 10px;
+
+}
+.paramsButton {
+
+    max-width: 300px;
+    display: inline-block;
+
+}
+
+.paramSubmitButton {
+
+    color: transparent;
+    border: 0;
+
 }
 
 .userData {
@@ -82,4 +118,112 @@
     margin-top: 15px;
     text-align: center;
     padding-top: calc(50vh - 300px);
+}
+
+.dishesContainer {
+    font-size: 0;
+}
+.dishCard {
+    width: calc(100% / 3 - 20px);
+    padding: 10px;
+    background-color: #eee;
+    margin: 10px;
+    border: 2px solid #666;
+    display: inline-block;
+    vertical-align: top;
+    font-size: 1rem;
+}
+
+.dishCardBasket{
+    width: calc(100% / 4 - 20px);
+    padding: 10px;
+    background-color: #eee;
+    margin: 10px;
+    border: 2px solid #666;
+    display: inline-block;
+    vertical-align: top;
+    font-size: 1rem;
+}
+.dishName {
+    font-size: 25px;
+    text-align: center;
+}
+.dishImage {
+    height: 200px;
+    width: calc(100% - 10px);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 5px;
+}
+.dishPrize {
+    margin: 5px;
+}
+.dishDescription {
+    font-size: 15px;
+    margin: 5px;
+    height: calc(2 * 20px);
+    overflow: hidden;
+    line-height: 20px;
+}
+.dishButtons {
+    text-align: right;
+    margin-top: 10px;
+}
+.dishDelete, .dishUpdate, .dishInformations {
+    display: inline-block;
+    overflow: hidden;
+    height: 30px;
+    width: 30px;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.dishDelete > *, .dishUpdate > *, .dishInformations > *{
+    opacity: 0;
+}
+.dishDelete{
+    background-image: url(/assets/img/cross.png);
+}
+.dishUpdate{
+    background-image: url(/assets/img/parameters.png);
+}
+.dishInformations{
+    background-image: url(/assets/img/informations.png);
+}
+.emptyBasket {
+    height: 50px;
+    color: #666;
+    display: block;
+    font-size: 25px;
+    text-align: center;
+}
+.basketSubmitButton {
+    text-align: center;
+}
+.basketSubmitButton button {
+    display: inline-block;
+    width: 100%;
+    max-width: 250px;
+}
+
+
+@media(max-width: 990px){
+    .dishCard {
+        width: calc(100% / 2 - 20px);
+    }
+    .dishCardBasket{
+        width: calc(100% / 3 - 20px);
+    }
+
+}
+
+@media(max-width: 768px){
+    .dishCard {
+        width: calc(100% - 20px);
+    }
+    .dishCardBasket{
+        width: calc(100% / 2 - 20px);
+    }
+
 }

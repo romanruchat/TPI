@@ -69,7 +69,7 @@ function get_dishes(){
     // Connexion à la BD
     $connexion = get_bd();
 
-    $request = $connexion->prepare('SELECT Dishes.idDishes, Dishes.Name, Dishes.Prize, Dishes.Description, Dishes.Status, Images.Name as img FROM Dishes INNER JOIN Images ON Dishes.idDishes = Images.Dishes_idDishes WHERE Dishes.Status = "1";');
+    $request = $connexion->prepare('SELECT Dishes.idDishes, Dishes.Name, Dishes.Prize, Dishes.Description, Dishes.Status, Images.Name as img FROM Dishes INNER JOIN Images ON Dishes.idDishes = Images.Dishes_idDishes WHERE Dishes.Status = "1" GROUP BY Dishes.idDishes;');
     $request->execute();
     $data=$request->fetchAll();
     return $data;
@@ -81,8 +81,9 @@ function research($term){
 
     $term = htmlspecialchars($term); //pour sécuriser le formulaire contre les failles html
     $connexion = get_bd();
-    $request = $connexion->prepare('SELECT Name, Prize, Description FROM Dishes WHERE Name LIKE ? OR Description LIKE ?');
+    $request = $connexion->prepare('SELECT Dishes.idDishes, Dishes.Name, Dishes.Prize, Dishes.Description, Dishes.Status, Images.Name as img FROM Dishes INNER JOIN Images ON Dishes.idDishes = Images.Dishes_idDishes WHERE Dishes.Status=1 AND Dishes.Name LIKE ? OR Dishes.Description LIKE ? GROUP BY idDishes');
     $request->execute(array("%".$term."%", "%".$term."%"));
+
     $data=$request->fetchAll();
     return $data;
 }
@@ -93,8 +94,38 @@ function account_removal($id){
 
     // Connexion à la BD
     $connexion = get_bd();
+
+    //delete from user has particularities
+    $request = $connexion->prepare('DELETE FROM User_has_Particularities WHERE User_idUsers = ? ');
+    $request->execute(array($id));
+
+    //delete from orders
+    $request = $connexion->prepare('DELETE FROM `Order` WHERE User_idUsers = ? ');
+    $request->execute(array($id));
+
+    //delete from users
     $request = $connexion->prepare('DELETE FROM User WHERE idUser = ? ');
     $request->execute(array($id));
+}
+
+function particularity_removal($idParticularity){
+
+    // Connexion à la BD
+    $connexion = get_bd();
+
+    //delete from user has particularities
+    $request = $connexion->prepare('DELETE FROM User_has_Particularities WHERE Particularities_idParticularities = ? ');
+    $request->execute(array($idParticularity));
+
+
+    //delete from particularities has dishes
+    $request = $connexion->prepare('DELETE FROM Dishes_has_Particularities WHERE Particularities_idParticularities = ? ');
+    $request->execute(array($idParticularity));
+
+    //delete from particularities
+    $request = $connexion->prepare('DELETE FROM Particularities WHERE idParticularities = ? ');
+    $request->execute(array($idParticularity));
+
 }
 
 //Fonction récupérant l'ensemble des spécificités
@@ -111,7 +142,7 @@ function get_particularities_all(){
 
 //Fonction ajoutant une particularité à l'utilisateur
 // $idUser est l'ID de l'utilisateur, $idParticularities est l'ID de la spécificité
-function add_particularities($idUser, $idParticularities){
+function add_user_particularities($idUser, $idParticularities){
 
     // Connexion à la BD
     $connexion = get_bd();
@@ -130,6 +161,14 @@ function delete_user_particularities($idUser){
 
 }
 
+function delete_dish_particularities($idDish){
+
+    // Connexion à la BD
+    $connexion = get_bd();
+    $request = $connexion->prepare('DELETE FROM Dishes_has_Particularities WHERE Dishes_idDishes = ?');
+    $request->execute(array($idDish));
+}
+
 //Fonction de récupération des spécificités de l'utilisateur
 // $idUser est l'ID de l'utilisateur
 function get_user_particularities($idUser){
@@ -144,6 +183,7 @@ function get_user_particularities($idUser){
 }
 
 function add_dish($dishName, $dishPrize, $dishDescription){
+
 
     // Connexion à la BD
     $connexion = get_bd();
@@ -169,15 +209,23 @@ function get_dish($param){
     // Connexion à la BD
     $connexion = get_bd();
 
+    $request = false;
+
     if(isset($param["name"])) {
         $request = $connexion->prepare('SELECT * FROM Dishes  WHERE Name = ? ');
         $request->execute(array($param["name"]));
     } else if (isset($param["id"])) {
-        $request = $connexion->prepare('SELECT * FROM Dishes  WHERE idDishes = ? ');
+        $request = $connexion->prepare('SELECT Dishes.idDishes, Dishes.Name, Dishes.Prize, Dishes.Description, Dishes.Status, Images.Name as img FROM Dishes INNER JOIN Images ON Dishes.idDishes = Images.Dishes_idDishes WHERE Dishes.Status = "1" AND Dishes.idDishes = ? GROUP BY Dishes.idDishes');
         $request->execute(array($param['id']));
+    } else if (isset($param["last"])){
+        $request = $connexion->prepare('SELECT * FROM Dishes  ORDER BY idDishes DESC LIMIT 1 ');
+        $request->execute(array());
     }
 
     $data=$request->fetchAll();
+    if(empty($data[0])){
+        return false;
+    }
     return $data[0];
 
 }
@@ -187,23 +235,36 @@ function dish_particularities($idParticularities, $idDish){
     // Connexion à la BD
     $connexion = get_bd();
 
-    $request = $connexion->prepare('INSERT INTO Particularities_has_Dishes (Particularities_idParticularities, Dishes_idDishes) VALUES (?, ?)');
+    $request = $connexion->prepare('INSERT INTO Dishes_has_Particularities (Particularities_idParticularities, Dishes_idDishes) VALUES (?, ?)');
     $request->execute(array($idParticularities, $idDish));
 }
 
 
-function get_dishes_user($idUser){
+function get_dishes_user($idUser)
+{
 
     // Connexion à la BD
     $connexion = get_bd();
 
-    $request = $connexion->prepare('
-SELECT idDishes, Dishes.Name as Name, Prize, Description FROM Dishes INNER JOIN Particularities_has_Dishes on Particularities_has_Dishes.Dishes_idDishes = Dishes.idDishes 
-INNER JOIN Particularities on Particularities.idParticularities =  Particularities_has_Dishes.Particularities_idParticularities
-INNER JOIN User_has_Particularities on Particularities.idParticularities =  Particularities_has_dishes.Particularities_idParticularities WHERE NOT User_idUsers = ? GROUP BY Dishes_idDishes;');
+    $request = $connexion->prepare('  SELECT Particularities_idParticularities as idParticularities FROM User_has_Particularities WHERE User_idUsers = ?');
     $request->execute(array($idUser));
-    $data=$request->fetchAll();
+    $data = $request->fetchAll();
     return $data;
+
+
+}
+
+function get_dishes_particularities()
+{
+
+    // Connexion à la BD
+    $connexion = get_bd();
+
+    $request = $connexion->prepare(' SELECT  Particularities_idParticularities as idParticularities, Dishes_idDishes as idDishes FROM Dishes_has_Particularities');
+    $request->execute(array());
+    $data = $request->fetchAll();
+    return $data;
+
 }
 
 function add_particularity($nameParticularity, $typeParticularity){
@@ -265,7 +326,7 @@ function get_dish_particularities($idDish){
     // Connexion à la BD
     $connexion = get_bd();
 
-    $request = $connexion->prepare('SELECT Particularities_idParticularities AS idParticularities FROM Particularities_has_Dishes WHERE Dishes_idDishes = ?');
+    $request = $connexion->prepare('SELECT Particularities_idParticularities AS idParticularities FROM Dishes_has_Particularities WHERE Dishes_idDishes = ?');
     $request->execute(array($idDish));
     $data=$request->fetchAll();
     return $data;
@@ -278,4 +339,39 @@ function update_dish($dishName, $dishPrize, $dishDescription, $idDish){
 
     $request = $connexion->prepare('UPDATE Dishes SET Name = ?, Prize = ?, Description = ? WHERE idDishes = ?');
     $request->execute(array($dishName, $dishPrize, $dishDescription, $idDish));
+}
+
+function add_image($imgName, $idDish){
+
+    // Connexion à la BD
+    $connexion = get_bd();
+
+    $request = $connexion->prepare('INSERT INTO Images SET Name = ?, Dishes_idDishes = ?');
+    $request->execute(array($imgName, $idDish));
+}
+
+function add_dish_particularities($idDish, $idParticularities){
+
+    // Connexion à la BD
+    $connexion = get_bd();
+    $request = $connexion->prepare('INSERT INTO Dishes_has_Particularities (Dishes_idDishes, Particularities_idParticularities) VALUES (?, ?)');
+    $request->execute(array($idDish, $idParticularities));
+}
+
+function add_order($dateOrder, $idUser){
+
+    // Connexion à la BD
+    $connexion = get_bd();
+    $request = $connexion->prepare('INSERT INTO `Order` (Date, User_idUsers) VALUES (?, ?)');
+    $request->execute(array($dateOrder, $idUser));
+}
+
+function get_last_order(){
+
+    // Connexion à la BD
+    $connexion = get_bd();
+    $request = $connexion->prepare('SELECT * FROM `Order` ORDER BY idOrder DESC LIMIT 1');
+    $request->execute(array());
+    $data=$request->fetchAll();
+    return $data;
 }

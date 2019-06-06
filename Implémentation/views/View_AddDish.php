@@ -4,7 +4,7 @@
             <!-- formulaire  d'ajout de plat -->
             <div class="card-header">Formulaire d'ajout de plat</div>
             <div class="card-body">
-                <form action="?action=AddDish" method="post">
+                <form action="?action=AddDish" method="post" enctype="multipart/form-data">
                     <div class="form-group">
                         <div class="form-row">
                             <div class="col-md-9">
@@ -15,7 +15,7 @@
                             </div>
                             <div class="col-md-3">
                                 <div class="form-label-group">
-                                    <input type="number" id="dishPrize" name="dishPrize" class="form-control" value="0" required="required">
+                                    <input type="number" id="dishPrize" name="dishPrize" class="form-control" value="0" min="0" step="0.01" required="required">
                                     <label for="dishPrize">Prix</label>
                                 </div>
                             </div>
@@ -28,7 +28,7 @@
                     </div>
                     <div class="form-group">
                         <div class="form-label-group">
-                            <input type="file" id="dishImages" name="dishImages" class="form-control" value="0" accept=".png, .jpeg" multiple />
+                            <input type="file" id="dishImages" name="dishImages[]" class="form-control" value="0" accept="image/jpeg, image/png" multiple required/>
                             <label for="dishImages">Images</label>
                         </div>
                     </div>
