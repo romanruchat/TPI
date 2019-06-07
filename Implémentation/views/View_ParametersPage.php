@@ -1,6 +1,16 @@
+<?php
+/*
+
+Créateur : Roman Ruchat
+Date de création : 23.05.2019
+But du fichier : C'est ici que sont affichés tous les utilisateurs et toutes les spécificités modifiables
+
+*/
+?>
+
 <?php Ob_start(); ?>
 
-
+<!-- Affiche tous les utilisateur-->
 <div class="parametersMain">
     <div class="paramsUser">
         <a href="?action=Inscription">
@@ -23,6 +33,7 @@
         <?php endforeach; ?>
         </div>
     </div>
+    <!-- Affiche toutes les spécificités-->
     <div class="paramsParticularities">
         <a href="?action=AddParticularityPage">
             <input class="paramsButton btn btn-primary btn-block" type="submit" value="Ajouter une spécificité">

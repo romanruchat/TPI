@@ -4,7 +4,6 @@
 
 Créateur : Roman Ruchat
 Date de création : 16.05.2019
-Version : 1.0
 But du fichier : Ce fichier fait le lien avec la base de données, ils stockent toutes les fonctions nécessitant une liaison à la base de données.
 */
 
@@ -108,6 +107,8 @@ function account_removal($id){
     $request->execute(array($id));
 }
 
+//Fonction de suppression de spécificités
+//$idParticularity est l'id de la particularité à supprimer
 function particularity_removal($idParticularity){
 
     // Connexion à la BD
@@ -161,6 +162,8 @@ function delete_user_particularities($idUser){
 
 }
 
+//Supprime les particularité du plat
+//$idDish est l'id du plat où les spécificités vont être supprimées
 function delete_dish_particularities($idDish){
 
     // Connexion à la BD
@@ -182,6 +185,8 @@ function get_user_particularities($idUser){
 
 }
 
+//Ajoute un plat à la BDD
+//$dishName est le nom du plat, $dishPrize est le prix du plat et $dishDescription et sa description
 function add_dish($dishName, $dishPrize, $dishDescription){
 
 
@@ -204,6 +209,8 @@ function get_users(){
     return $data;
 }
 
+//Récupère les informations d'un plat en fonction d'un paramètre
+//$param est le paramètre d'entrée qui prend soit le nom du plat, soit l'id du plat, soit son apparition dans le site
 function get_dish($param){
 
     // Connexion à la BD
@@ -230,6 +237,8 @@ function get_dish($param){
 
 }
 
+//Ajoute les particularités à un plat
+//$idParticularities est l'id de la spécificité à ajouter, $idDish est l'id du plat où la spécificité va être ajoutée
 function dish_particularities($idParticularities, $idDish){
 
     // Connexion à la BD
@@ -239,7 +248,8 @@ function dish_particularities($idParticularities, $idDish){
     $request->execute(array($idParticularities, $idDish));
 }
 
-
+//Récupère les spécificités d'un utilisateur
+//$idUser est l'id de l'utilisateur
 function get_dishes_user($idUser)
 {
 
@@ -254,6 +264,7 @@ function get_dishes_user($idUser)
 
 }
 
+//Récupère toutes les spécificités de tous les plats
 function get_dishes_particularities()
 {
 
@@ -267,6 +278,8 @@ function get_dishes_particularities()
 
 }
 
+//Ajoute une spécificité à la base de données
+//$nameParticularity est le nom de spécificité et $typeParticularity et le type de la spécificité
 function add_particularity($nameParticularity, $typeParticularity){
 
     // Connexion à la BD
@@ -277,6 +290,8 @@ function add_particularity($nameParticularity, $typeParticularity){
 
 }
 
+//Modifie les données de l'utilisateur
+//$lastName est le nom de l'utilisateur, $firstName est le prénom de l'utilisateur, $email est l'email de l'utilisateur, $streetName est le nom de la rue où vit l'utilisateur, $postCode est le code postal où vit l'utilisateur, $city est la ville dans laquelle l'utilisateur vit,  $floorNumber est le numéro d'étage de l'utilisateur, $streetNumber est le numéro de rue de l'utilisateur, $userType est le type de compte qu'a l'utilisateur et enfin $idUser est l'id de l'utilisateur
 function update_user($lastName, $firstName, $email, $streetName, $postCode, $city,  $floorNumber, $streetNumber, $userType, $idUser){
 
     if(isset($userType) && $userType == "administrateur"){
@@ -291,6 +306,8 @@ function update_user($lastName, $firstName, $email, $streetName, $postCode, $cit
     $request->execute(array($lastName, $firstName, $email, $streetName, $postCode, $city,  $floorNumber, $streetNumber, $userType, $idUser));
 }
 
+//Récupère une spécificité
+//$idParticularities est l'id de la particularité
 function get_particularity($idParticularities){
 
     // Connexion à la BD
@@ -302,6 +319,8 @@ function get_particularity($idParticularities){
     return $data[0];
 }
 
+//Supprime un plat
+//$idDish est l'id du plat
 function delete_dish($idDish){
 
     // Connexion à la BD
@@ -312,6 +331,8 @@ function delete_dish($idDish){
 
 }
 
+//Modifie une spécificité
+//$idParticularity est l'id de la spécificité, $name est le nom de la spécificité et $type est le type de la spécificité
 function update_particularity($idParticularity, $name, $type){
 
     // Connexion à la BD
@@ -321,6 +342,8 @@ function update_particularity($idParticularity, $name, $type){
     $request->execute(array($name, $type, $idParticularity));
 }
 
+//Récupère les particularités d'un plat
+//$idDish est l'id du plat
 function get_dish_particularities($idDish){
 
     // Connexion à la BD
@@ -332,6 +355,8 @@ function get_dish_particularities($idDish){
     return $data;
 }
 
+//Modifie les informations d'un plat
+//$dishName est le nom du plat, $dishPrize est le prix du plat, $dishDescription est la description du plat et $idDish et l'id du plat
 function update_dish($dishName, $dishPrize, $dishDescription, $idDish){
 
     // Connexion à la BD
@@ -341,6 +366,8 @@ function update_dish($dishName, $dishPrize, $dishDescription, $idDish){
     $request->execute(array($dishName, $dishPrize, $dishDescription, $idDish));
 }
 
+//Ajoute une image au plat
+//$imgName est le nom de l'image et $idDish est l'id du plat
 function add_image($imgName, $idDish){
 
     // Connexion à la BD
@@ -350,6 +377,8 @@ function add_image($imgName, $idDish){
     $request->execute(array($imgName, $idDish));
 }
 
+//ajoute les spécificités à un plat
+//$idDish est l'id du plat et $idParticularities est l'id de la spécificité
 function add_dish_particularities($idDish, $idParticularities){
 
     // Connexion à la BD
@@ -358,6 +387,8 @@ function add_dish_particularities($idDish, $idParticularities){
     $request->execute(array($idDish, $idParticularities));
 }
 
+//Créé la commande
+//$dateOrder est la date et l'heure à laquelle la commande est passé et $idUser est l'id de l'utilisateur
 function add_order($dateOrder, $idUser){
 
     // Connexion à la BD
@@ -366,6 +397,7 @@ function add_order($dateOrder, $idUser){
     $request->execute(array($dateOrder, $idUser));
 }
 
+//Récupère la dernière commande faite
 function get_last_order(){
 
     // Connexion à la BD

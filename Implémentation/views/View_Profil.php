@@ -1,3 +1,13 @@
+<?php
+/*
+
+Créateur : Roman Ruchat
+Date de création : 21.05.2019
+But du fichier : C'est ici que sont affichés toutes les informations de l'utilisateur, il peut les modifier à sa guise
+
+*/
+?>
+
 <?php Ob_start(); ?>
 
 

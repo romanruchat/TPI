@@ -1,3 +1,13 @@
+<?php
+/*
+
+Créateur : Roman Ruchat
+Date de création : 17.05.2019
+But du fichier : C'est ici que sont affichés tous les plats
+
+*/
+?>
+
 <?php Ob_start();
 ?>
 <!-- <a href="?action=Profile">
@@ -10,8 +20,9 @@
     <div class="container">
         <div class="card-header dishesHeader">
             <div class="col-md-4">
-                <form action="?action=Search" method = "post" class="searchForm">
-                    <input type="search" name="term" placeholder="Rechercher votre plat">
+                <form action="" method = "get" class="searchForm">
+                    <input type="hidden" name="action" value="Search"/>
+                    <input type="search" name="term" placeholder="Rechercher votre plat"/>
                 </form>
             </div>
             <div class="col-md-4">
@@ -57,12 +68,7 @@
                                 <input type="submit">
                             </form>
                         </div>
-                        <div class="dishDelete">
-                            <form action="?action=DeleteDish" method="post">
-                                <input hidden id="idDish" name="idDish" value="<?= $dish['idDishes']; ?>"/>
-                                <input type="submit" onClick="confirmation()">
-                            </form>
-                        </div>
+                        <div class="dishDelete" onclick="confirmation('?action=DeleteDish&idDish=<?= $dish['idDishes']; ?>')"></div>
                     </div>
                 <?php endif; ?>
                 </div>
@@ -77,9 +83,11 @@
 
 <!-- Script javascript permettant d'ouvrir la boîte de confirmation de suppression du plat -->
 <SCRIPT>
-    function confirmation() {
+    function confirmation(redirect) {
+        console.log(redirect);
         var msg = "Êtes-vous sur de vouloir supprimer le plat ?";
-        if (confirm(msg))
-            location.replace("?action=DeleteDish");
+        if (confirm(msg)) {
+            location.replace(redirect);
+        }
     }
 </SCRIPT>

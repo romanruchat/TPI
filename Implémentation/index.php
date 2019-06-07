@@ -2,7 +2,7 @@
 /* 
 
 Créateur : Roman Ruchat
-Date de création : 07.03.2019
+Date de création : 07.05.2019
 But du fichier : Ce fichier redirige l'application vers la bonne fonction en fonction de l'activité de l'utilisateur.
 
 */
@@ -130,6 +130,7 @@ switch($action){
         break;
     case'InformationsDishPage':
         informationsdishPage();
+        break;
     default : accueil();
     $menuPage = "accueil";
     break;

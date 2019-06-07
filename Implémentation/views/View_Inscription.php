@@ -1,3 +1,12 @@
+<?php
+/*
+
+Créateur : Roman Ruchat
+Date de création : 16.05.2019
+But du fichier : C'est sur cette page que l'on trouve le formulaire d'inscription
+*/
+?>
+
 <?php Ob_start(); ?>
 <div class="container">
     <div class="card card-register mx-auto mt-5">

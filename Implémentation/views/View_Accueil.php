@@ -1,9 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Roman Ruchat
- * Date: 14.05.2019
- */
+/*
+
+Créateur : Roman Ruchat
+Date de création : 14.05.2019
+But du fichier : C'est ici que sont toutes les données affichées sur la page d'accueil
+
+*/
 ?>
 
 <?php Ob_start(); ?>
@@ -17,15 +19,14 @@
     </div>
   </section>
 
-  <!-- Image Section - set the background image for the header in the line below -->
+    <!-- affiche une image -->
   <section class="py-5 bg-image-full" style="background-image: url('/assets/img/accueil.jpg');">
-    <!-- Put anything you want here! There is just a spacer below for demo purposes! -->
     <div style="height: 200px;"></div>
   </section>
 
 <div class="container">
 
-    <br><p class="lead">Du 21 juin au 18 septembre ! <br> Le retour des soirées plages sont aussi de retour, l'équipe de Rêverie offre un accès au bord du lac et propose de servir de quoi se restaurer ainsi que de que cocktails rafraichssiant</p>
+    <br><p class="lead">Du 21 juin au 18 septembre ! <br> Le retour des soirées plage sont aussi de retour, l'équipe de Rêverie offre un accès au bord du lac et propose de servir de quoi se restaurer ainsi que de que cocktails rafraîchissants</p>
 
 </div>
 

@@ -2,8 +2,7 @@
 /* 
 
 Créateur : Roman Ruchat
-Date de création : 07.03.2019
-Version : 1.0
+Date de création : 07.05.2019
 But du fichier : Ce fichier sert à lier l'utilisateur avec le modèle. Il contient les fonctions qui appelle les fonctions liées à la base de données.
 
 */
@@ -121,7 +120,7 @@ function getdishes(){
 //Affiche la page de plats avec les plats recherchés
 function search(){
 
-    $dishes = research($_POST['term']);
+    $dishes = research($_GET['term']);
     require('views/View_Plats.php');
 }
 
@@ -267,7 +266,7 @@ function parameterspage(){
 //Ajoute le plat au panier
 function adddishbasket()
 {
-    //Récupère les infos du plats et les ajoutent à un tableau
+    //Récupère les infos du plats sélectionné et les ajoutent à un tableau
     if (isset($_SESSION['loggedUser']))
     {
         $dish = get_dish(["id" => $_POST['idDish']]);
@@ -290,7 +289,7 @@ function adddishbasket()
     getdishes();
 }
 
-
+//Gère l'affichage du panier
 function basket(){
 
     $message = "";
@@ -307,14 +306,12 @@ function basket(){
     require('views/View_Panier.php');
 }
 
+//Gère la confirmation de la commande et l'envoi du mail
 function confirmorder(){
 
     $dateOrder = date('Y-n-j H:i:s ');
-    echo $dateOrder;
     add_order($dateOrder, $_SESSION['loggedUser']);
     $data = get_last_order();
-var_dump($_POST);
-    //add_dishes_order($data['idOder'], $_POST['idDishSelected']);
     $user = get_user(["id" => $_SESSION['loggedUser']]);
 if (strpos($user['Email'], "@cpnv.ch") !== false ) {
     ini_set("SMTP", "mail.cpnv.ch");
@@ -328,11 +325,7 @@ if (strpos($user['Email'], "@cpnv.ch") !== false ) {
 //=====Déclaration des messages au format texte et au format HTML.
     $message_txt = "Bonjour ! 
             Ceci est un message automatique de confirmation de la commande de " . $user['First_Name'] . " " . $user['Name'] . "
-            Voici votre commande :" ;
-                if(isset($_SESSION['dishesSelected']))
-                foreach($_SESSION['dishesSelected'] as $dishSelected) :
-              " Nom du plat " .$dishSelected['Name']. " " .$dishSelected['Prize']." " .$dishSelected['Description']."
-            "; endforeach;
+            ".
             "Nous nous rejouissons de vous retrouver dans peu de temps !";
 
     // $message_html = "<html><head></head><body><b>Salut à tous</b>, voici un e-mail envoyé par un <i>script PHP</i>.</body></html>";
@@ -378,20 +371,23 @@ if (strpos($user['Email'], "@cpnv.ch") !== false ) {
 }
     //Vide le panier
     $_SESSION['dishesSelected'] = array();
-    require('views/View_Panier.php');
+    basket();
 }
 
+//Affiche la page d'ajout de spécificité
 function addparticularitypage(){
 
     require('views/View_AddParticularityPage.php');
 }
 
+//Gère l'ajout de la particularité
 function addparticularity(){
 
     add_particularity($_POST['particularityName'], $_POST['particularities']);
     parameterspage();
 }
 
+//Affiche la page de modification de l'utilisateur
 function updateuserpage(){
 
     $data = get_user(["id" => $_POST['idUser']]);
@@ -399,19 +395,24 @@ function updateuserpage(){
 
 }
 
+//Gère la modification de l'utilisateur
 function updateuser(){
 
     update_user($_POST['lastName'], $_POST['firstName'],  $_POST['inputEmail'], $_POST['streetName'], $_POST['postCode'], $_POST['inputCity'], $_POST['floorNumber'], $_POST['streetNumber'], $_POST['userType'], $_POST['idUser']);
     parameterspage();
 }
 
+//Affiche la page de modification de particularité
 function particularityupdatepage(){
 
-    $data = get_particularity($_POST['idParticularities']);
+    $data = get_particularity($_POST['idParticularities']);;
    require('views/View_UpdateParticularityPage.php');
 }
 
+//Gère la déselection et la suppression des plats du paniet
 function deselectdish(){
+
+    //Vérifie quel plat est retiré et si son total arrive à 0 il est supprimé
     if(isset( $_SESSION['dishesSelected'][$_POST["idDishSelected"]])) {
         $_SESSION['dishesSelected'][$_POST["idDishSelected"]]['count']--;
         if ($_SESSION['dishesSelected'][$_POST["idDishSelected"]]['count'] == 0) {
@@ -421,25 +422,30 @@ function deselectdish(){
     basket();
 }
 
+//Supprime un plat
 function deletedish(){
-
-    delete_dish($_POST['idDish']);
+    delete_dish($_GET['idDish']);
     getdishes();
 }
 
+//Supprime un utilisateur
 function deleteuser(){
     account_removal($_GET['idUser']);
     parameterspage();
 }
 
+//Gère la modification d'une particularité
 function updateparticularity(){
+
 
     update_particularity($_POST['idParticularities'], $_POST['particularityName'], $_POST['particularities']);
     parameterspage();
 }
 
+//Affiche la page de modification d'un plat
 function updatedishpage(){
 
+    //Vérifie si un plat a été sélectionné
     if(empty($_GET['idDish'])){
         echo "erreur";
         getdishes();
@@ -455,6 +461,7 @@ function updatedishpage(){
     $all = get_particularities_all();
     $dishParticularities = get_dish_particularities($idDish);
 
+    //Traverse les particularités et les ajoutent à des tableaux en fonction de leur type, leur set la valeur checked s'il est sélectionné
     foreach($all as $particularity){
         $particularity['checked'] = false;
         foreach($dishParticularities as $dishParticularity){
@@ -481,25 +488,30 @@ function updatedishpage(){
 
 }
 
+//Gère la modification des plats
 function updatedish(){
 
     $all = get_particularities_all();
     delete_dish_particularities($_POST['idDish']);
+    //Modifie les particularités du plats
     foreach($all as $particularity){
         if(!empty($_POST['particularity_'.$particularity['idParticularities']])){
             add_dish_particularities($_POST['idDish'], $particularity['idParticularities']);
         }
     }
+    //Modifie les champs du plat
     update_dish($_POST['dishName'], $_POST['dishPrize'], $_POST['dishDescription'], $_POST['idDish']);
     ?><script>document.location.href="index.php?action=UpdateDishPage&idDish=<?=$_POST['idDish']?>";</script><?php
     exit();
 }
 
-/**/
+//Affiche les images en fonction de leur nom
+// $imgName est le nom de l'image à afficher
 function getDishImg($imgName){
     return "/assets/dishImg/".$imgName;
 }
 
+//Génère un string aléatoire pour former le nom du plat
 function generateRandomString($length = 10) {
     $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
     $charactersLength = strlen($characters);
@@ -510,6 +522,7 @@ function generateRandomString($length = 10) {
     return $randomString;
 }
 
+//Affiche les informations du plat
 function informationsdishPage(){
 
     $idDish = $_GET['idDish'];
@@ -521,6 +534,7 @@ function informationsdishPage(){
     $all = get_particularities_all();
     $dishParticularities = get_dish_particularities($idDish);
 
+    //Traverse les particularités et les ajoutent à des tableaux en fonction de leur type, leur set la valeur checked s'il est sélectionné
     foreach($all as $particularity){
         $particularity['checked'] = false;
         foreach($dishParticularities as $dishParticularity){

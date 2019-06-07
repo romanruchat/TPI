@@ -1,3 +1,14 @@
+
+<?php
+/*
+
+Créateur : Roman Ruchat
+Date de création : 14.05.2019
+But du fichier : C'est ici que le panier est géré, il affiche les plats et le boutons pour commander
+
+*/
+?>
+
 <?php Ob_start(); ?>
 
 <section class="py-5">
@@ -35,7 +46,7 @@
 
 
 
-<!-- Script javascript permettant d'ouvrir la boîte de confirmation de suppression de commande -->
+<!-- Script javascript permettant d'ouvrir la boîte de confirmation de commande -->
 <SCRIPT>
     function confirmation() {
         var msg = "Êtes-vous sur de vouloir passer cette commande ?";

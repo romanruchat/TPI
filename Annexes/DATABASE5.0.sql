@@ -27,7 +27,7 @@ CREATE TABLE IF NOT EXISTS `reveries_db`.`User` (
   `Postcode` SMALLINT(4) NULL,
   `City` VARCHAR(255) NULL,
   `Floor_Number` TINYINT(2) NULL,
-  `Street_Number` VARCHAR(3) NULL,
+  `Street_Number` VARCHAR(4) NULL,
   `User_Type` TINYINT(1) NULL,
   PRIMARY KEY (`idUser`))
 ENGINE = InnoDB;

@@ -1,7 +1,18 @@
+
+<?php
+/*
+
+Créateur : Roman Ruchat
+Date de création : 04.05.2019
+But du fichier : Affichage du formulaire permettant à la modification de l'utilisateur
+
+*/
+?>
+
 <?php Ob_start(); ?>
 <div class="container">
     <div class="card card-register mx-auto mt-5">
-        <!-- formulaire  d'inscription -->
+        <!-- formulaire  de modification de l'utilisateur -->
         <div class="card-header">Modification d'un utilisateur</div>
         <div class="card-body">
             <form action="?action=UpdateUser" method="post">
@@ -109,6 +120,5 @@
         if (confirm(msg)) {
             location.replace(redirect);
         }
-
     }
 </SCRIPT>

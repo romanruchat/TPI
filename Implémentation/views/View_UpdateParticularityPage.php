@@ -1,3 +1,14 @@
+
+<?php
+/*
+
+Créateur : Roman Ruchat
+Date de création : 04.06.2019
+But du fichier : Affichage du formulaire permettant à la modification des spécificités
+
+*/
+?>
+
 <?php Ob_start(); ?>
 
 <div class="container">
@@ -18,7 +29,8 @@
                         <div class="col-md-6">
                             <div class="form-label-group">
                                 <div class="form-row">
-                                    <input type="radio" id="into" name="particularities" value="Intolérance"  <?php if($data['Type'] == 'Intolérance'){
+                                    <!-- Vérifie quelle spécificité est check -->
+                                    <input type="radio" id="into" name="particularities" value="Intolérance" required <?php if($data['Type'] == 'Intolérance'){
                                     echo 'checked="checked" ';
                                     }
                                     ?>/>

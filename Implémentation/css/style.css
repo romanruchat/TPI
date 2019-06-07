@@ -147,6 +147,7 @@
 .dishName {
     font-size: 25px;
     text-align: center;
+    height: 75px;
 }
 .dishImage {
     height: 200px;
@@ -178,6 +179,7 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
+    cursor: pointer;
 }
 .dishDelete > *, .dishUpdate > *, .dishInformations > *{
     opacity: 0;
@@ -226,4 +228,9 @@
         width: calc(100% / 2 - 20px);
     }
 
+}
+
+.contacts{
+    text-align: center;
+    padding-top: 150px;
 }

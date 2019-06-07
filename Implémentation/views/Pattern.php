@@ -1,9 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Roman Ruchat
- * Date: 14.05.2019
- */
+/*
+
+Créateur : Roman Ruchat
+Date de création : 14.05.2019
+But du fichier : Ce fichier est le gabarit du site web avec l'entête et le pied de page qu'auront toutes les pages
+
+*/
 ?>
 
 <!DOCTYPE html>

@@ -1,9 +1,20 @@
+<?php
+/*
+
+Créateur : Roman Ruchat
+Date de création : 04.06.2019
+But du fichier : Cette page affiche toutes les informations du plat
+
+*/
+?>
+
 <?php Ob_start();  ?>
     <!-- Affichage des informations de l'utilisateur -->
     <section class="py-5">
         <div class="container">
             <div class="card-header">Les informations du plat </div>
             <div class="card-body">
+                <!-- formulaire d'affichage des informations du plat -->
                 <div class="form-group">
                     <div class="form-row">
                         <div class="col-md-3">
@@ -14,7 +25,6 @@
 
                             </div>
                         </div>
-                        <!-- formulaire de modifications des spécificités du profil utilisateur -->
                         <form action="?action=AddUserParticularities" method="post">
                             <div class="form-row">
                                 <div class="col-md-3">
